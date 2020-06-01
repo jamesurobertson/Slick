@@ -1,8 +1,9 @@
 import React from 'react';
+import MessageBox from './MessageBox';
 
 function App() {
   return (
-    <h1>Hello world!</h1>
+    <MessageBox/>
   );
 }
 
