@@ -1,1 +1,52 @@
-/* TODO Add site wide styles */
+* {
+    box-sizing: border-box;
+}
+.root-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 260px auto;
+    grid-template-rows: 38px auto;
+    grid-template-areas:
+    'searchBar searchBar'
+    'navbar mainContent';
+    width: 100vw;
+    height: 100vw;
+}
+
+.search-bar {
+    grid-area: searchBar;
+    background-color: #350d36;
+}
+
+.nav-bar {
+    grid-area: navbar;
+    background-color: #3f0e40
+}
+
+.main-content {
+    grid-area: mainContent
+}
+
+
+.message-input {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 15px;
+    outline: 0;
+    width: 100%;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+    bottom: 0;
+}
+
+.shortcut-button {
+    width: 10px;
+    height: 100%;
+}
+
+.channel-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
