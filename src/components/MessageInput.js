@@ -5,11 +5,9 @@ import { sendChannelMessage } from "../actions/index";
 const MessageInput = (props) => {
   const [message, setMessage] = useState("");
 
-  const { messages } = props;
-
   const postMessage = (e) => {
-    e.preventDefault();
-    props.dispatch(sendChannelMessage(message));
+      e.preventDefault();
+      props.postMessage(message);
     setMessage("");
   };
 
@@ -41,4 +39,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MessageInput);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postMessage: (message) => dispatch(sendChannelMessage(message)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageInput);

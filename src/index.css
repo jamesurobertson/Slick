@@ -1,17 +1,67 @@
+/* default  */
+
 * {
     box-sizing: border-box;
-}
-.root-container {
-    width: 100%;
+  }
+
+  html, body, div, span, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  abbr, address, cite, code,
+  del, dfn, em, img, ins, kbd, q, samp,
+  small, strong, sub, sup, var,
+  b, i,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, figcaption, figure,
+  header, hgroup, menu, nav, section, summary,
+  time, mark, audio, video {
+      margin:0;
+      padding:0;
+      border:0;
+      outline:0;
+      font-size: 16px;
+      vertical-align:baseline;
+      background:transparent;
+      font-family: "Neue Plak", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: inherit;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;https://duckduckgo.com/?q=react+html&t=brave&ia=web
+    }
+    ​
+    article,aside,details,figcaption,figure,
+    header,hgroup,menu,nav,section {
+        display:block;
+    }
+    ​
+    nav, ol, ul {
+        list-style:none;
+    }
+
+
+    /* End of default stlying  */
+html,
+body {
     height: 100%;
+    margin: 0;
+}
+#root {
+    display: grid;
+    height: 100%;
+}
+
+
+.root-container {
     display: grid;
     grid-template-columns: 260px auto;
     grid-template-rows: 38px auto;
     grid-template-areas:
     'searchBar searchBar'
     'navbar mainContent';
-    width: 100vw;
-    height: 100vw;
 }
 
 .search-bar {
@@ -25,9 +75,28 @@
 }
 
 .main-content {
-    grid-area: mainContent
+    grid-area: mainContent;
 }
 
+
+
+
+.channel-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px 10px;
+    justify-content: flex-end;
+}
+
+.channel-header {
+    height: 70px;
+}
+.channel-messages-container {
+}
+
+.channel-input-container {
+}
 
 .message-input {
     margin-top: 10px;
@@ -37,7 +106,6 @@
     width: 100%;
     border: 1px solid #bfbfbf;
     border-radius: 5px;
-    bottom: 0;
 }
 
 .shortcut-button {
@@ -45,8 +113,17 @@
     height: 100%;
 }
 
-.channel-container {
-    height: 100%;
+.login-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+
+.login-form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

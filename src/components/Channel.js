@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 
 const Channel = (props) => {
+
     return (
         <div className='channel-container'>
             <ChannelHeader/>
