@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 
 const Navbar = () => {
     return (
-        <div className='nav-bar'></div>
+        <div className='nav-bar'>
+        </div>
     )
 }
 

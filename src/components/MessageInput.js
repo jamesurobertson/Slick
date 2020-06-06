@@ -7,7 +7,7 @@ const MessageInput = (props) => {
 
   const postMessage = (e) => {
       e.preventDefault();
-      props.postMessage(message);
+      props.postMessage([props.user, message]);
     setMessage("");
   };
 
@@ -36,6 +36,7 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
+    user: state.userInfo.fullName
   };
 };
 

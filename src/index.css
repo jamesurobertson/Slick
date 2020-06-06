@@ -67,11 +67,17 @@ body {
 .search-bar {
     grid-area: searchBar;
     background-color: #350d36;
+    position: fixed;
+    height: 38px;
+    width: 100%;
 }
 
 .nav-bar {
     grid-area: navbar;
-    background-color: #3f0e40
+    background-color: #3f0e40;
+    width: 260px;
+    height: 100%;
+    position: fixed;
 }
 
 .main-content {

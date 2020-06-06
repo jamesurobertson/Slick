@@ -7,7 +7,6 @@ import Signup from "./Signup";
 import ChannelMessages from "./ChannelMessages";
 
 function App(props) {
-    console.log(props.currentUserId)
   return (
     <BrowserRouter>
       <Switch>

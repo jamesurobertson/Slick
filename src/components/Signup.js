@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {updateCurrentUser, updateToken} from '../actions/index'
+import {updateCurrentUser, updateToken, changeFullName} from '../actions/index'
 
 const Signup = (props) => {
 
-    console.log(props)
   // todo change backend to swap require of username/fullname
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +14,6 @@ const Signup = (props) => {
 
   const signup = async (e) => {
     e.preventDefault();
-    console.log('hi')
     try {
       const body = { name, email, password, confirmPassword };
       const res = await fetch(`http://localhost:8080/user`, {
@@ -47,6 +45,7 @@ const Signup = (props) => {
           setConfirmPassword("");
           props.updateToken(token)
           props.updateCurrentUser(id)
+          props.changeFullName(name)
       }
     } catch (e) {
       console.error(e);
@@ -130,7 +129,7 @@ const Signup = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-
+        userFullName: state.userInfo.fullName
     }
 }
 
@@ -138,6 +137,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateToken: (token) => dispatch(updateToken(token)),
         updateCurrentUser: (currentUserId) => dispatch(updateCurrentUser(currentUserId)),
+        changeFullName: (fullName) => dispatch(changeFullName(fullName)),
     }
 }
 

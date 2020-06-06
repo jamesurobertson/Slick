@@ -16,7 +16,7 @@ const ChannelMessages = (props) => {
     return (
         <div className='channel-messages-container'>
         {messages.map((message) => (
-          <div className='channel-message' key={message}>Ben: {message}</div>
+          <div className='channel-message' key={message}>{message[0]}: {message[1]}</div>
           ))}
           <div ref={messagesEndRef}/>
       </div>
@@ -27,6 +27,7 @@ const ChannelMessages = (props) => {
 const mapStateToProps = (state) => {
     return {
         messages: state.messages
+        // TODO set key for message.
     }
 }
 
