@@ -1,5 +1,7 @@
 import {SEND_CHANNEL_MESSAGE} from '../actions/index'
 
+
+
 const sendChannelMessageReducer = (state = [], action) => {
     switch (action.type) {
         case SEND_CHANNEL_MESSAGE:

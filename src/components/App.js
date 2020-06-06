@@ -1,16 +1,43 @@
 import React from "react";
-import Navbar from "./Navbar";
-import SearchBar from './SearchBar'
-import MainContent from './MainContent'
+import { connect } from "react-redux";
+import { Switch, NavLink, BrowserRouter } from "react-router-dom";
+import { ProtectedRoute, AuthRoute } from "../Routes";
+import Home from "./Home";
+import Signup from "./Signup";
+import ChannelMessages from "./ChannelMessages";
 
-function App({ store }) {
+function App(props) {
+    console.log(props.currentUserId)
   return (
-    <div className='root-container'>
-      <SearchBar />
-      <Navbar />
-      <MainContent />
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <ProtectedRoute
+          exact
+          path="/"
+          component={Home}
+          currentUserId={props.currentUserId}
+        />
+        <AuthRoute
+          path="/register"
+          component={Signup}
+          currentUserId={props.currentUserId}
+        />
+        {/* <AuthRoute
+        path="/login"
+        component={Login}
+        currentUserId={props.currentUserId}
+      /> */}
+      </Switch>
+    </BrowserRouter>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    currentUserId: state.auth.currentUserId,
+  };
+};
+
+export default connect(mapStateToProps)(App);
+
+//   <Signup/>

@@ -92,6 +92,8 @@ body {
 .channel-header {
     height: 70px;
 }
+
+ /* TODO: style these */
 .channel-messages-container {
 }
 
@@ -113,15 +115,15 @@ body {
     height: 100%;
 }
 
-.login-form-container {
+.signup-form-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 50px;
 }
 
 
-.login-form {
+.signup-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
