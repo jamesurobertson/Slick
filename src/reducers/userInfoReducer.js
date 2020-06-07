@@ -3,6 +3,7 @@ import {
   CHANGE_DISPLAY_NAME,
   CHANGE_TITLE,
   CHANGE_EMAIL,
+  CHANGE_PROFILE_PIC
 } from "../actions";
 
 
@@ -24,6 +25,10 @@ const updateUserInfoReducer = (state = {}, action) => {
       return Object.assign({}, state, {
         email: action.email,
       });
+    case CHANGE_PROFILE_PIC:
+        return Object.assign({}, state, {
+            profilePic: action.imageUrl
+        })
     default:
       return state;
   }

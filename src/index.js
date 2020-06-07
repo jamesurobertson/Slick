@@ -4,7 +4,7 @@ import './index.css';
 import App from "./components/App";
 import { Provider } from "react-redux";
 import configureStore from "./store/storeConfig";
-import { changeFullName, changeDisplayNAme, changeTitle, changeEmail } from "./actions";
+import { changeFullName, changeDisplayNAme, changeTitle, changeEmail, changeProfilePic } from "./actions";
 
 
 
@@ -21,12 +21,13 @@ const getUserInfo = async (userId) => {
         });
 
     if (!res.ok) throw res;
-    const {fullName, displayName, title, email} = await res.json()
+    const {fullName, displayName, title, email, profileImageUrl} = await res.json()
 
     store.dispatch(changeFullName(fullName))
     store.dispatch(changeDisplayNAme(displayName))
     store.dispatch(changeTitle(title))
     store.dispatch(changeEmail(email))
+    store.dispatch(changeProfilePic(profileImageUrl))
   } catch (e) {
     console.error(e);
   }

@@ -24,7 +24,8 @@ const Message = (props) => {
 
 mapStateToProps = state => {
     return {
-        profileImage: state.profileImage
+        profileImage: state.userInfo.profileImage
+
     }
 }
 

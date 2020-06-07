@@ -5,6 +5,7 @@ export const CHANGE_FULL_NAME = 'CHANGE_FULL_NAME'
 export const CHANGE_DISPLAY_NAME = 'CHANGE_DISPLAY_NAME'
 export const CHANGE_TITLE = 'CHANGE_TITLE'
 export const CHANGE_EMAIL = 'CHANGE_EMAIL'
+export const CHANGE_PROFILE_PIC = 'CHANGE_PROFILE_PIC'
 
 export const sendChannelMessage = message => {
     return {
@@ -53,5 +54,12 @@ export const changeEmail = email => {
     return {
         type: CHANGE_EMAIL,
         email
+    }
+}
+
+export const changeProfilePic = imageUrl => {
+    return {
+        type: CHANGE_PROFILE_PIC,
+        imageUrl
     }
 }

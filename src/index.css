@@ -157,3 +157,25 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+
+.message-profile-pic {
+    height: 36px;
+    width: 36px;
+}
+
+.channel-message {
+    display: flex;
+    padding: 8px 0;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.messageSender {
+    font-weight: bold;
+
+}
