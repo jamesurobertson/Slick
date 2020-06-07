@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Switch, NavLink, BrowserRouter } from "react-router-dom";
+import { Switch, BrowserRouter } from "react-router-dom";
 import { ProtectedRoute, AuthRoute } from "../Routes";
 import Home from "./Home";
 import Signup from "./Signup";
-import ChannelMessages from "./ChannelMessages";
 
 function App(props) {
   return (

@@ -3,7 +3,6 @@ import {
   CHANGE_DISPLAY_NAME,
   CHANGE_TITLE,
   CHANGE_EMAIL,
-  changeFullName,
 } from "../actions";
 
 

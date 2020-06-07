@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { sendChannelMessage } from "../actions/index";
 
@@ -7,7 +7,7 @@ const MessageInput = (props) => {
 
   const postMessage = (e) => {
       e.preventDefault();
-      props.postMessage([props.user, message]);
+      props.postMessage(message);
     setMessage("");
   };
 
@@ -15,9 +15,15 @@ const MessageInput = (props) => {
     setMessage(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(`mounted`)
+  },[])
+
+  console.log('it rerenders')
+
   return (
-    <>
-      <div className="message-input-container">
+    <div className='message-input-container-outer'>
+      <div className="message-input-container-inner">
         {/* <div className="shortcut-button"></div> */}
         <form onSubmit={postMessage}>
           <input
@@ -29,14 +35,13 @@ const MessageInput = (props) => {
           {/* <button type="submit">Send Message</button> */}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
-    user: state.userInfo.fullName
   };
 };
 

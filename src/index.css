@@ -67,9 +67,11 @@ body {
 .search-bar {
     grid-area: searchBar;
     background-color: #350d36;
-    position: fixed;
+    top: 0;
     height: 38px;
     width: 100%;
+    position:fixed;
+    z-index: 100;
 }
 
 .nav-bar {
@@ -82,32 +84,52 @@ body {
 
 .main-content {
     grid-area: mainContent;
+    display: grid;
+    grid-template-areas: 'main-content';
 }
 
 
 
 
 .channel-container {
+    grid-area: main-content;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding: 10px 10px;
-    justify-content: flex-end;
 }
 
 .channel-header {
-    height: 70px;
+    height: 64px;
+    border-bottom: 1px solid black;
+    background-color: white;
+    position: fixed;
+    left: 260px;
+    right: 0;
+    z-index: 50;
+
+}
+.channel-primary-view {
+    display: flex;
+    flex-direction: column;
 }
 
- /* TODO: style these */
 .channel-messages-container {
+    padding: 64px 0 55px 12px;
 }
 
-.channel-input-container {
+
+.message-input-container-outer {
+    z-index: 100;
+    position: fixed;
+    right: 0;
+    left: 260px;
+    bottom: 0;
+    background-color: white;
 }
 
+.message-input-container-inner {
+    padding: 0 10px 10px;
+}
 .message-input {
-    margin-top: 10px;
     padding: 10px;
     font-size: 15px;
     outline: 0;
