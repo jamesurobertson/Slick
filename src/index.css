@@ -113,7 +113,7 @@ body {
 }
 
 .channel-messages-container {
-    padding: 64px 0 55px 12px;
+    padding: 64px 0 55px;
 }
 
 
@@ -166,7 +166,11 @@ body {
 
 .channel-message {
     display: flex;
-    padding: 8px 0;
+    padding: 8px 0 8px 12px;
+}
+
+.channel-message:hover {
+    background-color: #F9F9F9;
 }
 
 .message-content {

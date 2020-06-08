@@ -12,7 +12,6 @@ const ChannelMessages = (props) => {
   };
   useEffect(scrollToBottom, [messages]);
   let count = 0;
-  console.log(`img`, props.profilePic);
   return (
     <div className="channel-primary-view">
       <div className="channel-messages-container">
