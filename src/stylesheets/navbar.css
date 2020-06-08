@@ -1,0 +1,48 @@
+.nav-bar {
+    grid-area: navbar;
+    background-color: #3f0e40;
+    width: 260px;
+    height: 100%;
+    top: 38px;
+    position: fixed;
+    font-size: 16px;
+}
+
+.nav-bar-container {
+    color: white;
+
+}
+
+.navbar-channel-dms-container {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid white;
+    padding: 15px;
+
+}
+
+.navbar-channels-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px;
+
+}
+
+.navbar-channels-title {
+    display: flex;
+    align-items: center;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid white;
+    padding-right: 10px
+}
+
+.navbar-channel-browser {
+    height: 10px;
+    width: 10px;
+}

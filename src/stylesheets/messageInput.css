@@ -1,0 +1,26 @@
+
+.message-input-container-outer {
+    z-index: 100;
+    position: fixed;
+    right: 0;
+    left: 260px;
+    bottom: 0;
+    background-color: white;
+}
+
+.message-input-container-inner {
+    padding: 0 10px 10px;
+}
+.message-input {
+    padding: 10px;
+    font-size: 15px;
+    outline: 0;
+    width: 100%;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+}
+
+.shortcut-button {
+    width: 10px;
+    height: 100%;
+}

@@ -1,11 +1,8 @@
 export const SEND_CHANNEL_MESSAGE = 'SEND_CHANNEL_MESSSAGE'
 export const UPDATE_TOKEN = 'UPDATE_TOKEN'
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
-export const CHANGE_FULL_NAME = 'CHANGE_FULL_NAME'
-export const CHANGE_DISPLAY_NAME = 'CHANGE_DISPLAY_NAME'
-export const CHANGE_TITLE = 'CHANGE_TITLE'
-export const CHANGE_EMAIL = 'CHANGE_EMAIL'
-export const CHANGE_PROFILE_PIC = 'CHANGE_PROFILE_PIC'
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
 
 export const sendChannelMessage = message => {
     return {
@@ -29,37 +26,67 @@ export const updateCurrentUser = currentUserId => {
     }
 }
 
-export const changeFullName = fullName => {
+
+export const updateUserInfo = userInfo => {
     return {
-        type: CHANGE_FULL_NAME,
-        fullName
+        type: UPDATE_USER_INFO,
+        userInfo
     }
 }
 
-export const changeDisplayNAme = displayName => {
+export const receiveChannels = channels => {
     return {
-        type: CHANGE_DISPLAY_NAME,
-        displayName
+        type: RECEIVE_CHANNELS,
+        channels
     }
 }
 
-export const changeTitle = title => {
-    return {
-        type: CHANGE_TITLE,
-        title
+
+
+
+export const getChannels = (userId) => async dispatch => {
+
+    try {
+        const res = await fetch(`http://localhost:8080/user/channel/${userId}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+        if (!res.ok) throw res
+        const channels = await res.json()
+        console.log(`getchannels`, channels)
+        const channelArray = []
+        channels.forEach(channel => {
+            const {Channel: {name}} = channel
+            channelArray.push(name)
+        })
+        dispatch(receiveChannels(channelArray))
+
+    } catch (e) {
+        console.error(e)
     }
 }
 
-export const changeEmail = email => {
-    return {
-        type: CHANGE_EMAIL,
-        email
-    }
-}
 
-export const changeProfilePic = imageUrl => {
-    return {
-        type: CHANGE_PROFILE_PIC,
-        imageUrl
+export const getUserInfo = (userId) => async dispatch => {
+    try {
+        const res = await fetch(`http://localhost:8080/user/${userId}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SOUNDIFY_ACCESS_TOKEN")}`
+            }
+        })
+
+      if (!res.ok) throw res;
+      const user = await res.json()
+      console.log(user)
+      dispatch(updateUserInfo(user))
+
+    } catch (e) {
+      console.error(e);
     }
-}
+  };

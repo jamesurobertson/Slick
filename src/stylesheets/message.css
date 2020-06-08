@@ -1,0 +1,21 @@
+.main-content {
+    grid-area: mainContent;
+    display: grid;
+    grid-template-areas: 'main-content';
+}
+
+.message-profile-pic {
+    height: 36px;
+    width: 36px;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.messageSender {
+    font-weight: bold;
+
+}

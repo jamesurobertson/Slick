@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import {updateCurrentUser, updateToken, changeFullName} from '../actions/index'
+import {updateCurrentUser, updateToken, updateUserInfo} from '../actions/index'
 
 const Signup = (props) => {
 
@@ -45,7 +45,7 @@ const Signup = (props) => {
           setConfirmPassword("");
           props.updateToken(token)
           props.updateCurrentUser(id)
-          props.changeFullName(name)
+          props.updateUserInfo({fullName: name, email})
       }
     } catch (e) {
       console.error(e);
@@ -137,7 +137,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateToken: (token) => dispatch(updateToken(token)),
         updateCurrentUser: (currentUserId) => dispatch(updateCurrentUser(currentUserId)),
-        changeFullName: (fullName) => dispatch(changeFullName(fullName)),
+        updateUserInfo: (userInfo) => dispatch(updateUserInfo(userInfo)),
     }
 }
 

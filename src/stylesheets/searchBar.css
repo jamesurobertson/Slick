@@ -1,0 +1,9 @@
+.search-bar {
+    grid-area: searchBar;
+    background-color: #350d36;
+    top: 0;
+    height: 38px;
+    width: 100%;
+    position:fixed;
+    z-index: 100;
+}
