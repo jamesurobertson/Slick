@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { sendChannelMessage } from "../actions/index";
+import { postChannelMessage } from "../actions/index";
 
 const MessageInput = (props) => {
+    const {messages, channelId, postChannelMessage} = props
   const [message, setMessage] = useState("");
 
   const postMessage = (e) => {
     e.preventDefault();
     if (message === "") return;
-    props.postMessage(message);
+    postChannelMessage(message, channelId,localStorage.getItem('SLICK_CURRENT_USER_ID'));
     setMessage("");
   };
 
@@ -26,7 +27,7 @@ const MessageInput = (props) => {
             className="message-input"
             onChange={messageChange}
             value={message}
-            placeholder="Message #general"
+            placeholder={`Message ${channelId}`}
           />
           {/* <button type="submit">Send Message</button> */}
         </form>
@@ -38,12 +39,13 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
+    channelId: state.session.activeChannel
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postMessage: (message) => dispatch(sendChannelMessage(message)),
+    postChannelMessage: (content,channelId, userId) => dispatch(postChannelMessage(content,channelId, userId)),
   };
 };
 

@@ -3,16 +3,20 @@ import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import MainContent from "./MainContent";
-import { getChannels, getUserInfo } from "../actions/index";
+import { getChannels, getUserInfo, getAllMessages } from "../actions/index";
 
 const Home = (props) => {
   const userId = localStorage.getItem("SLICK_CURRENT_USER_ID");
+    const {getChannels, getUserInfo, getAllMessages } = props
 
   useEffect(() => {
-      console.log('hi')
-      props.getChannels(userId)
-      props.getUserInfo(userId)
-  }, []);
+      getChannels(userId)
+      getUserInfo(userId)
+  }, [getChannels, getUserInfo ,userId]);
+
+  useEffect(() => {
+      getAllMessages()
+  }, [getAllMessages])
 
   return (
     <div className="root-container">
@@ -29,8 +33,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getChannels: async (userId) => dispatch(getChannels(userId)),
-    getUserInfo: async (userId) => dispatch(getUserInfo(userId)),
+    getChannels: (userId) => dispatch(getChannels(userId)),
+    getUserInfo: (userId) => dispatch(getUserInfo(userId)),
+    getAllMessages: () => dispatch(getAllMessages())
   };
 };
 

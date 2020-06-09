@@ -1,4 +1,4 @@
-.nav-bar {
+.navbar {
     grid-area: navbar;
     background-color: #3f0e40;
     width: 260px;
@@ -8,8 +8,8 @@
     font-size: 16px;
 }
 
-.nav-bar-container {
-    color: white;
+.navbar-container {
+    color: #BFBFBF;
 
 }
 
@@ -21,16 +21,26 @@
 
 }
 
-.navbar-channels-header {
+.navbar__subheader {
     display: flex;
     justify-content: space-between;
-    padding: 20px 10px;
+    padding: 6px 10px 10px;
 
 }
 
-.navbar-channels-title {
+.navbar-channels {
+    padding: 0 20px
+}
+
+.navbar__subheader-name {
+    padding-left: 10px;
+}
+
+.navbar__subheader-title {
     display: flex;
     align-items: center;
+    width: 170px;
+    cursor: pointer;
 }
 
 .arrow-right {
@@ -39,10 +49,23 @@
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 5px solid white;
-    padding-right: 10px
 }
 
-.navbar-channel-browser {
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+
+}
+
+.navbar-channel-browser, .navbar-dm-browser {
     height: 10px;
     width: 10px;
+}
+
+.navbar-channel {
+    padding: 5px 0;
+    cursor: pointer;
 }

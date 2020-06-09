@@ -1,32 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import logo from "../profileImages/profile.jpeg";
 
 const Message = (props) => {
-    return (
-        <div className='message'>
-            <div className='message-profile-pic-container'>
-                <img src={props.profileImage}/>
-            </div>
-            <div>
-                <div className='message-info'>
-                    <div className='message-sender'>
-                        {props.user}
-                    </div>
-                    <div className='message-content'>
-                        {props.message}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <>
+      <img className="message-profile-pic" src={logo} alt="profile-pic" />
+      <div className="message-content">
+        <div className="messageSender">{props.sender}</div>
+        <div className="messageContent">{props.message}</div>
+      </div>
+    </>
+  );
+};
 
 
-mapStateToProps = state => {
-    return {
-        profileImage: state.userInfo.profileImage
-
-    }
-}
-
-export default connect(mapStateToProps)(Message)
+export default connect()(Message);

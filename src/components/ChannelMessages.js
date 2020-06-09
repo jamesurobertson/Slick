@@ -1,31 +1,40 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import MessageInput from "./MessageInput";
-import logo from "../profileImages/profile.jpeg";
+import Message from "./Message";
 
 const ChannelMessages = (props) => {
-  const { messages } = props;
+  const { messages, channelId } = props;
+  const [channelMessages, setChannelMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView();
   };
-  useEffect(scrollToBottom, [messages]);
+
+  useEffect(scrollToBottom, [channelMessages]);
+
+  useEffect(() => {
+    setChannelMessages(Object.values(messages));
+  }, [messages]);
+
   let count = 0;
   return (
     <div className="channel-primary-view">
       <div className="channel-messages-container">
-        {messages.map((message) => (
-          <div className="channel-message" key={++count}>
-            <img className="message-profile-pic" src={logo} alt="profile-pic" />
-            <div className="message-content">
-                <div className='messageSender'>{props.displayName}
-                </div>
-                <div className='messageContent'>{message}</div>
-            </div>
-          </div>
-        ))}
-
+        {channelMessages.map((message) => {
+          const { content, messageableType, id, messageableId } = message;
+          if (
+            messageableType === "channel" &&
+            messageableId === parseInt(channelId)
+          ) {
+            return (
+              <div className="channel-message" key={id}>
+                <Message message={content} />
+              </div>
+            );
+          }
+        })}
         <div ref={messagesEndRef} />
       </div>
       <MessageInput />
@@ -36,9 +45,7 @@ const ChannelMessages = (props) => {
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
-    profilePic: state.userInfo.profilePic,
-    displayName: state.userInfo.displayName || state.userInfo.fullName
-
+    channelId: state.session.activeChannel,
   };
 };
 

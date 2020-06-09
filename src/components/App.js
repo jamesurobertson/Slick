@@ -32,7 +32,7 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    currentUserId: state.auth.currentUserId,
+    currentUserId: state.session.currentUserId,
   };
 };
 
