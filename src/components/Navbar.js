@@ -18,7 +18,7 @@ const Navbar = (props) => {
   };
 
   const changeChannel = (e) => {
-    props.changeChannel(e.target.id);
+    props.changeChannel([e.target.id, e.target.innerHTML]);
   };
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const Navbar = (props) => {
           <div className="navbar-dms-container">
             <div className="navbar__subheader">
               <div className="navbar__subheader-title" onClick={expandDms}>
-                <div className="arrow-down"></div>
+                <div className="arrow-right"></div>
                 <div className="navbar__subheader-name"> Direct Messagess</div>
               </div>
               <button className="navbar-dm-browser"></button>

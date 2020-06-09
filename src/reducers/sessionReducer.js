@@ -7,7 +7,7 @@ import {
 const initialState = {
   authToken: localStorage.getItem("SLICK_ACCESS_TOKEN"),
   currentUserId: localStorage.getItem("SLICK_CURRENT_USER_ID"),
-  activeChannel: "#General",
+  activeChannel: ["1", '#General'],
 };
 
 const updateSessionReducer = (state = initialState, action) => {

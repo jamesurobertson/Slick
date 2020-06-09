@@ -143,6 +143,7 @@ export const getUserInfo = (userId) => async dispatch => {
 
       if (!res.ok) throw res;
       const message = await res.json()
+      console.log(message)
       dispatch(sendChannelMessage(message))
 
     } catch (e) {

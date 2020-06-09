@@ -1,21 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { postChannelMessage } from "../actions/index";
 
 const MessageInput = (props) => {
-    const {messages, channelId, postChannelMessage} = props
+  const {channelId, postChannelMessage, channels} = props
   const [message, setMessage] = useState("");
+  const [channelName, setChannelName] = useState('')
 
   const postMessage = (e) => {
     e.preventDefault();
     if (message === "") return;
-    postChannelMessage(message, channelId,localStorage.getItem('SLICK_CURRENT_USER_ID'));
+    postChannelMessage(message, channelId[0],localStorage.getItem('SLICK_CURRENT_USER_ID'));
     setMessage("");
   };
 
   const messageChange = (e) => {
     setMessage(e.target.value);
   };
+
+  useEffect(() => {
+      let vals = Object.values(channels)
+      for (let i = 0; i < vals.length; i++) {
+          if (parseInt(channelId) === vals[i].id) {
+              setChannelName(vals[i].name)
+          }
+      }
+  },[channels, channelName, channelId])
 
 
   return (
@@ -27,7 +37,7 @@ const MessageInput = (props) => {
             className="message-input"
             onChange={messageChange}
             value={message}
-            placeholder={`Message ${channelId}`}
+            placeholder={`Message ${channelName}`}
           />
           {/* <button type="submit">Send Message</button> */}
         </form>
@@ -38,14 +48,14 @@ const MessageInput = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.messages,
-    channelId: state.session.activeChannel
+    channelId: state.session.activeChannel,
+    channels: state.channels
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postChannelMessage: (content,channelId, userId) => dispatch(postChannelMessage(content,channelId, userId)),
+    postChannelMessage: (content,channelId, userId, displayName) => dispatch(postChannelMessage(content,channelId, userId, displayName)),
   };
 };
 

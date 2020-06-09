@@ -7,12 +7,11 @@ const Message = (props) => {
     <>
       <img className="message-profile-pic" src={logo} alt="profile-pic" />
       <div className="message-content">
-        <div className="messageSender">{props.sender}</div>
+        <div className="messageSender">James Robertson</div>
         <div className="messageContent">{props.message}</div>
       </div>
     </>
   );
 };
-
 
 export default connect()(Message);
