@@ -5,6 +5,8 @@ export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES'
+export const RECEIVE_USERS = 'RECEIVE_USERS'
+
 
 
 export const sendChannelMessage = message => {
@@ -44,6 +46,13 @@ export const receiveChannels = channels => {
     }
 }
 
+export const receiveUsers = users => {
+    return {
+        type: RECEIVE_USERS,
+        users
+    }
+}
+
 export const changeChannel = channel => {
     return {
         type: CHANGE_CHANNEL,
@@ -51,12 +60,15 @@ export const changeChannel = channel => {
     }
 }
 
-export const receiveMessages = message => {
+export const receiveMessages = messages => {
     return {
         type: RECEIVE_MESSAGES,
-        message
+        messages
     }
 }
+
+
+
 
 // all channels a particular user is apart of
 export const getChannels = (userId) => async dispatch => {
@@ -92,11 +104,30 @@ export const getAllMessages = () => async dispatch => {
 
         if (!res.ok) throw res
         const messages = await res.json()
-        messages.forEach(message => {
-            dispatch(receiveMessages(message))
+        let messPlusDisplayName = messages.map(message => {
+            const { id, userId, content, messageableType, messageableId, createdAt, User: {displayName}} = message
+            return { id, userId, content, messageableType, messageableId, createdAt, displayName}
         })
 
+        dispatch(receiveMessages(messPlusDisplayName))
     } catch(e) {
+        console.error(e)
+    }
+}
+
+export const getAllUsers = () => async dispatch => {
+    try {
+        const res = await fetch('http://localhost:8080/user', {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+        if (!res.ok) throw res
+        const users = await res.json()
+        dispatch(receiveUsers(users))
+    } catch (e) {
         console.error(e)
     }
 }
@@ -129,9 +160,9 @@ export const getUserInfo = (userId) => async dispatch => {
     }
   };
 
-  export const postChannelMessage = (content, channelId, userId) => async (dispatch) => {
+  export const postChannelMessage = (content, channelId, displayName) => async (dispatch) => {
     try {
-        const res = await fetch(`http://localhost:8080/message/${channelId}/${userId}`,
+        const res = await fetch(`http://localhost:8080/message/${channelId}`,
         {
             method: 'POST',
             body: JSON.stringify({content}),
@@ -143,7 +174,7 @@ export const getUserInfo = (userId) => async dispatch => {
 
       if (!res.ok) throw res;
       const message = await res.json()
-      console.log(message)
+      message.message.displayName = displayName
       dispatch(sendChannelMessage(message))
 
     } catch (e) {

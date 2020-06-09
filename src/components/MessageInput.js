@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 import { postChannelMessage } from "../actions/index";
 
 const MessageInput = (props) => {
-  const {channelId, postChannelMessage, channels} = props
+  const {channelId, postChannelMessage, channels, dName} = props
   const [message, setMessage] = useState("");
   const [channelName, setChannelName] = useState('')
 
   const postMessage = (e) => {
     e.preventDefault();
     if (message === "") return;
-    postChannelMessage(message, channelId[0],localStorage.getItem('SLICK_CURRENT_USER_ID'));
+    const displayName = dName.userInfo.displayName
+    postChannelMessage(message, channelId[0], displayName);
+
     setMessage("");
   };
 
@@ -49,7 +51,8 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => {
   return {
     channelId: state.session.activeChannel,
-    channels: state.channels
+    channels: state.channels,
+    dName: state.userInfo
   };
 };
 

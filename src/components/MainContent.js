@@ -6,7 +6,6 @@ const MainContent = () => {
     return (
         <div className='main-content'>
             <Channel/>
-
         </div>
     )
 }

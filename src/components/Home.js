@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import MainContent from "./MainContent";
-import { getChannels, getUserInfo, getAllMessages } from "../actions/index";
+import { getChannels, getUserInfo, getAllMessages, getAllUsers } from "../actions/index";
 
 const Home = (props) => {
   const userId = localStorage.getItem("SLICK_CURRENT_USER_ID");
-    const {getChannels, getUserInfo, getAllMessages } = props
+    const {getChannels, getUserInfo, getAllMessages, getAllUsers } = props
 
   useEffect(() => {
       getChannels(userId)
@@ -17,6 +17,10 @@ const Home = (props) => {
   useEffect(() => {
       getAllMessages()
   }, [getAllMessages])
+
+  useEffect(() => {
+    getAllUsers()
+}, [getAllUsers])
 
   return (
     <div className="root-container">
@@ -35,7 +39,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getChannels: (userId) => dispatch(getChannels(userId)),
     getUserInfo: (userId) => dispatch(getUserInfo(userId)),
-    getAllMessages: () => dispatch(getAllMessages())
+    getAllMessages: () => dispatch(getAllMessages()),
+    getAllUsers: () => dispatch(getAllUsers())
   };
 };
 
