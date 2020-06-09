@@ -5,13 +5,13 @@ import Message from "./Message";
 
 const ChannelMessages = (props) => {
   const { messages, channelId } = props;
-
   const [channelMessages, setChannelMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView();
   };
+
   useEffect(() => {
     setChannelMessages(Object.values(messages));
   }, [messages]);
@@ -23,14 +23,15 @@ const ChannelMessages = (props) => {
     <div className="channel-primary-view">
       <div className="channel-messages-container">
         {channelMessages.map((message) => {
-          const { content, messageableType, id, messageableId } = message;
+            // TODO: pass displayname down to Message component
+          const { content, messageableType, id, messageableId, displayName } = message;
           if (
             messageableType === "channel" &&
-            messageableId === parseInt(channelId)
+            messageableId === parseInt(channelId[0])
           ) {
             return (
               <div className="channel-message" key={id}>
-                <Message message={content} />
+                <Message message={content} displayName={displayName} />
               </div>
             );
           } else { return ''}

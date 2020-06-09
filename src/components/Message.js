@@ -7,7 +7,7 @@ const Message = (props) => {
     <>
       <img className="message-profile-pic" src={logo} alt="profile-pic" />
       <div className="message-content">
-        <div className="messageSender">James Robertson</div>
+        <div className="messageSender">{props.displayName}</div>
         <div className="messageContent">{props.message}</div>
       </div>
     </>
