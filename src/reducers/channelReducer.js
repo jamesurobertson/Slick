@@ -1,4 +1,4 @@
-import {RECEIVE_CHANNELS, UPDATE_CHANNEL_INFO} from '../actions/index'
+import {RECEIVE_CHANNELS, UPDATE_CHANNEL_INFO, ADD_CHANNEL} from '../actions/index'
 
 const channelReducer = (state = {}, action) => {
     switch (action.type) {
@@ -12,6 +12,11 @@ const channelReducer = (state = {}, action) => {
             let channelId = action.channelInfo.id
             return Object.assign({}, state,{
                 [channelId]: action.channelInfo
+            })
+        case ADD_CHANNEL:
+            let channelIdd = action.channel.id
+            return Object.assign({}, state, {
+                [channelIdd]: action.channel
             })
         default:
             return state

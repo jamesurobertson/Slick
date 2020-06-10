@@ -60,6 +60,7 @@ const ChannelHeader = (props) => {
             {channel.topic}
           </button>
           <Modal
+
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}

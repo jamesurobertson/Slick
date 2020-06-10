@@ -10,8 +10,15 @@ export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES'
 export const RECEIVE_USERS = 'RECEIVE_USERS'
 
+export const ADD_CHANNEL = 'ADD_CHANNEL'
 
 
+export const addChannel = channel => {
+    return {
+        type: ADD_CHANNEL,
+        channel
+    }
+}
 export const sendChannelMessage = message => {
     return {
         type: SEND_CHANNEL_MESSAGE,
@@ -212,4 +219,28 @@ export const getUserInfo = (userId) => async dispatch => {
     } catch (e) {
       console.error(e);
     }
+  }
+
+
+  export const postAddChannel = channelName => async(dispatch) => {
+      const encodedChannelName = encodeURIComponent(channelName)
+      try {
+        const res = await fetch(`http://localhost:8080/channel/${encodedChannelName}`,
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+        if (!res.ok) throw res
+
+        const channel = await res.json()
+        console.log(channel)
+        dispatch(addChannel(channel))
+
+      } catch (e) {
+          console.error(e)
+      }
   }
