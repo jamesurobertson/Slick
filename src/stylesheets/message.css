@@ -19,3 +19,9 @@
     font-weight: bold;
 
 }
+
+
+.message-timestamp {
+    font-size: 12px;
+    color: grey;
+}

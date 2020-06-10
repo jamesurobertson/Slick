@@ -11,8 +11,6 @@ const Channel = (props) => {
         <div className='channel-container'>
             <ChannelHeader/>
             <ChannelMessages/>
-            <div className='channel-scrollTo'>
-            </div>
 
         </div>
     )

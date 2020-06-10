@@ -7,7 +7,8 @@ const Message = (props) => {
     <>
       <img className="message-profile-pic" src={logo} alt="profile-pic" />
       <div className="message-content">
-        <div className="messageSender">{props.displayName}</div>
+          {/* TODO: On timestamp hover show date */}
+        <div className="messageSender">{props.displayName}<span className='message-timestamp'> {props.createdAt}</span></div>
         <div className="messageContent">{props.message}</div>
       </div>
     </>

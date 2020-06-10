@@ -1,6 +1,5 @@
 
 .message-input-container-outer {
-    z-index: 100;
     position: fixed;
     right: 0;
     left: 260px;

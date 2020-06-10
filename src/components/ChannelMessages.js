@@ -16,27 +16,42 @@ const ChannelMessages = (props) => {
     setChannelMessages(Object.values(messages));
   }, [messages]);
 
-  useEffect(scrollToBottom, [channelMessages, messages]);
-
+//   TODO: Scrol to bottom when you click on a channel
+  useEffect(scrollToBottom, [channelMessages, messages, channelId]);
 
   return (
     <div className="channel-primary-view">
       <div className="channel-messages-container">
         {channelMessages.map((message) => {
-            // TODO: pass displayname down to Message component
-          const { content, messageableType, id, messageableId, displayName } = message;
+          // TODO: pass displayname down to Message component
+          const {
+            content,
+            messageableType,
+            id,
+            messageableId,
+            displayName,
+            createdAt,
+          } = message;
           if (
             messageableType === "channel" &&
             messageableId === parseInt(channelId[0])
           ) {
             return (
               <div className="channel-message" key={id}>
-                <Message message={content} displayName={displayName} />
+                <Message
+                  message={content}
+                  displayName={displayName}
+                  createdAt={new Date(createdAt).toLocaleTimeString("en-US", {
+                    timeStyle: 'short'
+                  })}
+                />
               </div>
             );
-          } else { return ''}
+          } else {
+            return "";
+          }
         })}
-        <div ref={messagesEndRef} />
+        <div className='channel-scrollTo' ref={messagesEndRef} ></div>
       </div>
       <MessageInput />
     </div>

@@ -1,8 +1,11 @@
 export const SEND_CHANNEL_MESSAGE = 'SEND_CHANNEL_MESSSAGE'
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL'
+
 export const UPDATE_TOKEN = 'UPDATE_TOKEN'
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
+export const UPDATE_CHANNEL_INFO = 'UPDATE_CHANNEL_INFO'
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES'
 export const RECEIVE_USERS = 'RECEIVE_USERS'
@@ -23,7 +26,6 @@ export const updateToken = token => {
     }
 }
 
-
 export const updateCurrentUser = currentUserId => {
     return {
         type: UPDATE_CURRENT_USER,
@@ -36,6 +38,13 @@ export const updateUserInfo = userInfo => {
     return {
         type: UPDATE_USER_INFO,
         userInfo
+    }
+}
+
+export const updateChannelInfo = channelInfo => {
+    return {
+        type: UPDATE_CHANNEL_INFO,
+        channelInfo
     }
 }
 
@@ -83,10 +92,9 @@ export const getChannels = (userId) => async dispatch => {
         })
 
         if (!res.ok) throw res
+        // TODO: MOVE FOREACH TO REDUCER
         const channels = await res.json()
-        channels.forEach(channel => {
-            dispatch(receiveChannels(channel))
-        })
+        dispatch(receiveChannels(channels))
 
     } catch (e) {
         console.error(e)
@@ -114,6 +122,7 @@ export const getAllMessages = () => async dispatch => {
         console.error(e)
     }
 }
+
 
 export const getAllUsers = () => async dispatch => {
     try {
@@ -176,6 +185,29 @@ export const getUserInfo = (userId) => async dispatch => {
       const message = await res.json()
       message.message.displayName = displayName
       dispatch(sendChannelMessage(message))
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  export const postChannelUpdate = (channelId, topic, numUsers) => async (dispatch) => {
+    try {
+        const res = await fetch(`http://localhost:8080/channel/${channelId}`,
+        {
+            method: 'PUT',
+            body: JSON.stringify({topic}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+      if (!res.ok) throw res;
+
+      const {channel} = await res.json()
+      channel.numUsers = numUsers
+      dispatch(updateChannelInfo(channel))
 
     } catch (e) {
       console.error(e);
