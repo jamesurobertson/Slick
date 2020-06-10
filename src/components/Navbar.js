@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { changeChannel, postAddChannel } from "../actions/index";
+import {
+  changeChannel,
+  postAddChannel,
+  postCreateChannel,
+} from "../actions/index";
 import Modal from "react-modal";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Navbar = (props) => {
   const [showChannels, setShowChannels] = useState(false);
@@ -12,22 +15,14 @@ const Navbar = (props) => {
   const [navChannels, setNavChannels] = useState([]);
 
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [addChannelInput, setAddChannelInput] = useState("");
 
   Modal.setAppElement("#root");
 
-  const loading = open && options.length === 0;
-  const { channels, postAddChannel } = props;
+  const { channels, postAddChannel, postCreateChannel } = props;
 
   useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
     (async () => {
       const res = await fetch("http://localhost:8080/channel", {
         headers: {
@@ -36,23 +31,17 @@ const Navbar = (props) => {
         },
       });
 
-      const channels = await res.json();
-      console.log(channels);
-      if (active) {
-        setOptions(channels.map((channel) => channel));
-      }
+      const allChannels = await res.json();
+      const filteredOptions = allChannels.filter(
+        (channelOption) => !channels.hasOwnProperty(channelOption.id)
+      ).map(option => option.name)
+        setOptions(filteredOptions);
     })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
+  }, [channels]);
 
   useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
+    setNavChannels(Object.values(channels));
+  }, [channels]);
 
   const expandChannels = (e) => {
     setShowChannels(!showChannels);
@@ -66,31 +55,38 @@ const Navbar = (props) => {
     props.changeChannel([e.target.id, e.target.innerHTML]);
   };
 
-  useEffect(() => {
-    setNavChannels(Object.values(channels));
-  }, [channels]);
-
+  // + button to add / create channels TODO: a better name?
   const browseChannels = (e) => {
-    console.log(`browsing channels!`);
     setIsOpen(true);
   };
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
 
   function closeModal() {
     setIsOpen(false);
   }
 
-  const addChannel = (e) => {
-      postAddChannel(addChannelInput)
-      closeModal()
+  // cancel from modal
+  const closeNewChannel = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
   };
 
-  const addChannelHandler = e => {
-      setAddChannelInput(e.target.innerHTML)
+  // adds a channel to users navbar
+  const addChannel = (e) => {
+    e.preventDefault()
+    console.log(options)
+    if (options.includes(addChannelInput)) {
+      postAddChannel(addChannelInput)
+    } else {
+      postCreateChannel(addChannelInput)
+    }
+    setAddChannelInput('')
+    closeModal();
+  };
+
+  const addChannelInputHandler = e => {
+    setAddChannelInput(e.target.value || e.target.innerHTML)
   }
+
 
   const customStyles = {
     content: {
@@ -127,50 +123,44 @@ const Navbar = (props) => {
               </button>
               <Modal
                 isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Example Modal"
               >
-                  <div style={{ width: 300 }}>
-                    <Autocomplete
-                      onChange={addChannelHandler}
-                      id="channel-browser"
-                      style={{ width: 300 }}
-                      open={open}
-                      onOpen={() => {
-                        setOpen(true);
-                      }}
-                      onClose={() => {
-                        setOpen(false);
-                      }}
-                      getOptionSelected={(option, value) =>
-                        option.name === value.name
-                      }
-                      getOptionLabel={(option) => option.name}
-                      options={options}
-                      loading={loading}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Search for Channels"
-                          variant="outlined"
-                          InputProps={{
-                            ...params.InputProps,
-                            endAdornment: (
-                              <React.Fragment>
-                                {loading ? (
-                                  <CircularProgress color="inherit" size={20} />
-                                ) : null}
-                                {params.InputProps.endAdornment}
-                              </React.Fragment>
-                            ),
-                          }}
-                        />
-                      )}
-                    />
+                <div style={{ width: 300 }}>
+                  <div className="modalContent">
+                    <div id="modal-addChannel-container">
+                    <h1 className="addChannel-form-title">Search or Create Channel</h1>
+                      <Autocomplete
+                        freeSolo
+                        onInputChange={addChannelInputHandler}
+                        options={options}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Search for Channels"
+                            margin="normal"
+                            variant="outlined"
+                          />
+                        )}
+                      />
+                      <div className="addChannel-form-buttons">
+                          <button
+                            className="addChannel-form-button addChannel-add"
+                            onClick={addChannel}
+                          >
+                            Add
+                          </button>
+                          <button
+                            className="addChannel-form-button addChannel-cancel"
+                            onClick={closeNewChannel}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                    </div>
                   </div>
-                  <button onClick={addChannel} type="submit">Add</button>
+                </div>
               </Modal>
             </div>
             <div className="navbar-channels">
@@ -220,6 +210,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeChannel: (channel) => dispatch(changeChannel(channel)),
     postAddChannel: (channelName) => dispatch(postAddChannel(channelName)),
+    postCreateChannel: (channelName) =>
+      dispatch(postCreateChannel(channelName)),
   };
 };
 

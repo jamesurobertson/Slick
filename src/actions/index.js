@@ -19,6 +19,7 @@ export const addChannel = channel => {
         channel
     }
 }
+
 export const sendChannelMessage = message => {
     return {
         type: SEND_CHANNEL_MESSAGE,
@@ -213,7 +214,6 @@ export const getUserInfo = (userId) => async dispatch => {
       if (!res.ok) throw res;
 
       const {channel} = await res.json()
-      channel.numUsers = numUsers
       dispatch(updateChannelInfo(channel))
 
     } catch (e) {
@@ -237,10 +237,37 @@ export const getUserInfo = (userId) => async dispatch => {
         if (!res.ok) throw res
 
         const channel = await res.json()
-        console.log(channel)
         dispatch(addChannel(channel))
+        dispatch(changeChannel([channel.id, channel.name]))
+
 
       } catch (e) {
           console.error(e)
       }
   }
+
+
+export const postCreateChannel = name => async(dispatch) => {
+    try {
+        const body = { name }
+        const res = await fetch(`http://localhost:8080/channel`,
+        {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+        if (!res.ok) throw res
+
+        const channel = await res.json()
+        dispatch(addChannel(channel))
+        dispatch(changeChannel([channel.id, channel.name]))
+
+
+      } catch (e) {
+          console.error(e)
+      }
+}

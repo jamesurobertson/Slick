@@ -32,7 +32,8 @@ const Home = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

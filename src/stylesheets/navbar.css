@@ -85,3 +85,46 @@
     padding: 5px 0;
     cursor: pointer;
 }
+
+
+.addChannel-form-title {
+    font-size: 22px;
+    font-weight: 900;
+    width: 100%;
+}
+
+.addChannel-form-container {
+    padding: 10px 0;
+}
+
+.addChannel-form-title{
+    border-radius: 3px;
+    padding: 10px;
+    min-height: 56px;
+    font-size: 22px;
+    width: 300px;
+    overflow: auto;
+}
+
+
+.addChannel-form-buttons {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.addChannel-form-button {
+    border: 1px solid grey;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 10px 15px;
+    outline: 0;
+    background-color: transparent;
+}
+
+.addChannel-add {
+    margin-right: 15px;
+    color:white;
+    border-color: #007a5a;
+    background-color: #007a5a
+}
