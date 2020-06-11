@@ -54,7 +54,7 @@ const NavbarDropDown = (props) => {
       <ul className="navbar__dropdown-links">
         <li className="navbar__dropdown-link">View Profile</li>
         <li className="navbar__dropdown-link">
-          <a href="https://github.com/jamesurobertson/slick" target="_blank"> Github</a>
+          <a href="https://github.com/jamesurobertson/slick" rel="noopener noreferrer" target="_blank"> Github</a>
         </li>
         <li onClick={userLogout} className="navbar__dropdown-link">
           Logout

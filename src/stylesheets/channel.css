@@ -11,6 +11,7 @@
     position: fixed;
     left: 260px;
     right: 0;
+    z-index: 50;
 }
 
 .channel-header-inner {
@@ -109,6 +110,8 @@ div[contenteditable]{
 .channel-message {
     display: flex;
     padding: 8px 0 8px 12px;
+    top: 0px;
+    position: relative;
 }
 
 .channel-message:hover {

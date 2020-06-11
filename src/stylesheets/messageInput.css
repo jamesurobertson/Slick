@@ -8,18 +8,34 @@
 }
 
 .message-input-container-inner {
-    padding: 0 10px 10px;
+    display: flex;
+    margin: 0 10px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    align-items: center;
 }
 .message-input {
     padding: 10px;
-    font-size: 15px;
-    outline: 0;
+    font-size: 16px;
     width: 100%;
-    border: 1px solid #bfbfbf;
-    border-radius: 5px;
+    outline: 0;
+    border: none;
+    background-color: transparent;
 }
 
-.shortcut-button {
-    width: 10px;
-    height: 100%;
+
+.message-form {
+    display: flex;
+    width: 100%;
+}
+
+.emojiButton {
+    border: none;
+    border-left: 1px solid gray;
+    padding: 5px;
+    background: transparent;
+}
+
+.fa-laugh {
+    font-size: 23px;
 }
