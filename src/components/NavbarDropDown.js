@@ -1,6 +1,4 @@
 import React from "react";
-// TODO: GET IMAGE FROM AWS INSTEAD
-import logo from "../profileImages/profile.jpeg";
 import { connect } from "react-redux";
 import { updateUserInfo, logout } from "../actions/index";
 
@@ -8,7 +6,6 @@ const NavbarDropDown = (props) => {
   const { userInfo, updateUserInfo, logout } = props;
 
   if (userInfo.userInfo) {
-    // console.log(userInfo.userInfo.fullName)
   }
 
   const userLogout = (e) => {
@@ -32,7 +29,7 @@ const NavbarDropDown = (props) => {
         <div className="navbar__dropdown-profileImg-container">
           <img
             className="navbar__dropdown-profileImg"
-            src={logo}
+            src={userInfo.userInfo.profileImageUrl}
             alt="profileImg"
           />
         </div>

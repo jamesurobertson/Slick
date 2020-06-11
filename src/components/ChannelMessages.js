@@ -21,8 +21,7 @@ const ChannelMessages = (props) => {
   //   TODO: Scrol to bottom when you click on a channel
   useEffect(scrollToBottom, [channelMessages, messages, channelId]);
 
-  const addEmoji = (e) => {
-      console.log(e)
+  const addReaction = (e, messageId) => {
       const emojiObj = {id: e.id, skin: localStorage.getItem('emoji-mart.skin')}
       setReactions([...reactions, emojiObj])
 
@@ -38,20 +37,25 @@ const ChannelMessages = (props) => {
             messageableType,
             id,
             messageableId,
+            userId,
             displayName,
             createdAt,
+            profileImageUrl
           } = message;
           if (
             messageableType === "channel" &&
             messageableId === parseInt(channelId[0])
           ) {
             return (
-              <>
-                <div className="channel-message" key={id}>
+              <div key={id}>
+                <div className="channel-message" id={id}>
                   <Message
-                  addEmoji={addEmoji}
+                  addReaction={addReaction}
                     message={content}
                     displayName={displayName}
+                    messageId={id}
+                    userId={userId}
+                    profileImageUrl={profileImageUrl}
                     createdAt={new Date(createdAt).toLocaleTimeString("en-US", {
                       timeStyle: "short",
                     })}
@@ -61,7 +65,7 @@ const ChannelMessages = (props) => {
                     reactions.map(reaction => <Emoji emoji={reaction} size={22}/>)
                 }
                 </div>
-              </>
+              </div>
             );
           } else {
             return "";

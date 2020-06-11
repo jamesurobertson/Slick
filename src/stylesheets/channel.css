@@ -1,7 +1,7 @@
 .channel-container {
-    grid-area: main-content;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .channel-header-outer {
@@ -9,9 +9,9 @@
     border-bottom: 1px solid grey;
     background-color: white;
     position: fixed;
-    left: 260px;
-    right: 0;
-    z-index: 50;
+    z-index: 10;
+    left: 260px;;
+    width: 100%;
 }
 
 .channel-header-inner {
@@ -99,18 +99,19 @@ div[contenteditable]{
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     justify-content: flex-end;
 }
 
 .channel-messages-container {
-    /* height:100%; */
-    padding: 64px 0 55px;
+    padding: 0 0 55px;
 }
 
 .channel-message {
     display: flex;
     padding: 8px 0 8px 12px;
     top: 0px;
+    width: 100%;
     position: relative;
 }
 

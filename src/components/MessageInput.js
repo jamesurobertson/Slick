@@ -4,7 +4,7 @@ import { postChannelMessage } from "../actions/index";
 import { Picker } from "emoji-mart";
 
 const MessageInput = (props) => {
-  const { channelId, postChannelMessage, channels, dName } = props;
+  const { channelId, postChannelMessage, channels, userInfo } = props;
   const [message, setMessage] = useState("");
   const [channelName, setChannelName] = useState("");
   const [emojiActive, setEmojiActive] = useState(false);
@@ -12,8 +12,9 @@ const MessageInput = (props) => {
   const postMessage = (e) => {
     e.preventDefault();
     if (message === "") return;
-    const displayName = dName.userInfo.displayName;
-    postChannelMessage(message, channelId[0], displayName);
+    const displayName = userInfo.userInfo.displayName;
+    const profileImageUrl = userInfo.userInfo.profileImageUrl
+    postChannelMessage(message, channelId[0], displayName, profileImageUrl);
 
     setMessage("");
   };
@@ -37,7 +38,6 @@ const MessageInput = (props) => {
   };
 
   const addEmoji = (e) => {
-    console.log(e);
     setMessage(message + e.native);
     setEmojiActive(!emojiActive);
   };
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
   return {
     channelId: state.session.activeChannel,
     channels: state.channels,
-    dName: state.userInfo,
+    userInfo: state.userInfo,
   };
 };
 

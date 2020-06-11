@@ -25,10 +25,11 @@ const NavbarHeader = (props) => {
       marginRight: "-50%",
       width: "300px",
       backgroundColor: 'whitesmoke',
-      padding: '0'
+      padding: '0',
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0)",
+      zIndex: "20",
     },
   };
 

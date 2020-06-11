@@ -1,0 +1,55 @@
+.procard-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.procard__procardImage {
+    height: 300px;
+    width: 300px;
+}
+
+.procard__userInfo {
+    padding: 15px
+}
+
+.procard__fullName {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.procard__title {
+    font-weight: 400px
+}
+
+.procard__buttons {
+    padding: 0 10px 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.procard__message-button {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    outline: 0;
+    width: 200px;
+    height: 40px;
+    padding: 10 15px;
+    background-color: #1264a3;
+    border: none;
+}
+
+.procard__message-button:hover {
+    background-color: #3387c6
+}
+
+.ReactModal__Body--open {
+    overflow-y: hidden;
+  }
+
+
+.emoji-mart {
+    overflow-y: hidden;
+}

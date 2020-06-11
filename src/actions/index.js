@@ -21,6 +21,7 @@ export const addChannel = channel => {
     }
 }
 
+
 export const logout = (session) => {
     return {
         type: LOGOUT,
@@ -129,8 +130,8 @@ export const getAllMessages = () => async dispatch => {
         if (!res.ok) throw res
         const messages = await res.json()
         let messPlusDisplayName = messages.map(message => {
-            const { id, userId, content, messageableType, messageableId, createdAt, User: {displayName}} = message
-            return { id, userId, content, messageableType, messageableId, createdAt, displayName}
+            const { id, userId, content, messageableType, messageableId, createdAt, User: {displayName, profileImageUrl}} = message
+            return { id, userId, content, messageableType, messageableId, createdAt, displayName, profileImageUrl}
         })
 
         dispatch(receiveMessages(messPlusDisplayName))
@@ -185,7 +186,7 @@ export const getUserInfo = (userId) => async dispatch => {
     }
   };
 
-  export const postChannelMessage = (content, channelId, displayName) => async (dispatch) => {
+  export const postChannelMessage = (content, channelId, displayName, profileImageUrl) => async (dispatch) => {
     try {
         const res = await fetch(`http://localhost:8080/message/${channelId}`,
         {
@@ -200,6 +201,7 @@ export const getUserInfo = (userId) => async dispatch => {
       if (!res.ok) throw res;
       const message = await res.json()
       message.message.displayName = displayName
+      message.message.profileImageUrl = profileImageUrl
       dispatch(sendChannelMessage(message))
 
     } catch (e) {

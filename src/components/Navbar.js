@@ -74,7 +74,6 @@ const Navbar = (props) => {
   // adds a channel to users navbar
   const addChannel = (e) => {
     e.preventDefault()
-    console.log(options)
     if (options.includes(addChannelInput)) {
       postAddChannel(addChannelInput)
     } else {

@@ -63,3 +63,9 @@ body {
     'searchBar searchBar'
     'navbar mainContent';
 }
+
+
+.main-content {
+    grid-area: mainContent;
+    display: flex;
+}

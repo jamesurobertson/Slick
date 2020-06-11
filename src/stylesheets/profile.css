@@ -1,0 +1,30 @@
+.profile__container {
+    grid-area: profile;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid black;
+    position: fixed;
+    right: 0;
+    height: 100%;
+    width: 400px;
+
+}
+
+
+.profile__header {
+    /* height: 64px; */
+    border-bottom: 1px solid gray;
+    background-color: white;
+    z-index: 60;
+    /* border-left: 1px solid black; */
+    /* position: fixed; */
+    /* left: 260px; */
+    /* right: 0; */
+    /* z-index: 50; */
+}
+
+.profile__main {
+}
+
+.profile__footer {
+}

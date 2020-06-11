@@ -1,25 +1,76 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import logo from "../profileImages/profile.jpeg";
 import { Picker } from "emoji-mart";
+import Modal from "react-modal";
+import ProfileCard from "./ProfileCard";
 
 const Message = (props) => {
+  const { addReaction, profileImageUrl } = props;
+  const [emojiShown, setEmojiShown] = useState(false);
+  const [imgX, setImgX] = useState(null)
+  const [imgY, setImgY] = useState(null)
+  const [showProfileCard, setShowProfileCard] = useState(false);
 
-    const {addEmoji} = props
-    const [emojiShown, setEmojiShown] = useState(false)
+  Modal.setAppElement("#root");
+
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal(e) {
+      e.preventDefault()
+    setShowProfileCard(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: imgY,
+      left: imgX,
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      padding: '0',
+      border: 'none',
+      borderRadius: '5px',
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.0)",
+      zIndex: "1000",
+    },
+  };
+
   const openThread = (e) => {
     console.log("open thread");
   };
 
   const openEmoji = (e) => {
-    console.log("open emoji");
-    setEmojiShown(!emojiShown)
+    setEmojiShown(!emojiShown);
   };
 
+  const openProfileCard = (e) => {
+    const rect = e.target.getBoundingClientRect()
+    console.log(document.height)
+    console.log(rect)
+    //429
+    if (rect.y > 484) {
+        setImgY(485)
+    } else {
+        setImgY(rect.y)
+    }
+    setImgX(rect.x + 45)
+    setShowProfileCard(true);
+  };
 
   return (
     <>
-      <img className="message-profile-pic" src={logo} alt="profile-pic" />
+      <button className="profileCardButton" onClick={openProfileCard}>
+        <img
+          className="message-profile-pic"
+          src={profileImageUrl}
+          alt="profile-pic"
+        />
+      </button>
       <div className="message-content">
         {/* TODO: On timestamp hover show date */}
         <div className="messageSender">
@@ -39,7 +90,7 @@ const Message = (props) => {
           onClick={openThread}
           className="message-popup-button thread-button"
         >
-          <i className="message-popup-emoji thread-open far fa-comment-dots"></i>
+          <i className="message-popup-emoji thread-open far fa-comment-dots" />
         </button>
       </div>
       <div className="message-emoji-picker">
@@ -48,14 +99,23 @@ const Message = (props) => {
             emojiTooltip
             title="Slick Emojis for you"
             emoji="point_up"
-            onSelect={addEmoji}
+            onSelect={(event, messageId) => addReaction(event, props.messageId)}
             autoFocus
-            style={{ position: "absolute", top: '-445px', right: "10px" }}
+            style={{ position: "absolute", top: "-445px", right: "10px" }}
           />
         ) : (
           ""
         )}
       </div>
+      <Modal
+        isOpen={showProfileCard}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <ProfileCard />
+      </Modal>
     </>
   );
 };
