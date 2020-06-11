@@ -1,0 +1,101 @@
+.navbar-more-container {
+    display: flex;
+    justify-content: space-between;
+    height: 63px;
+    border-bottom: 1px solid #502351;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.navbar-more:hover {
+    background-color: rgb(0,0,0, .15);
+    cursor: pointer;
+}
+
+.navbarHeader__composeMessage {
+    border: 1px solid white;
+    background-color: white;
+    z-index: 1;
+    outline: 0;
+    border-radius: 400px;
+    height: 40px;
+    width: 40px;
+
+}
+
+.navbarHeader__workspaceName {
+    color: white;
+    font-weight: bold;
+}
+
+.navbarHeader__userName {
+    color: #BFBFBF
+}
+
+
+.navbar-more:hover .navbarHeader__userName {
+    color: white;
+}
+
+.navbar__dropdown-container {
+}
+
+.navbar__dropdown-header {
+    display: flex;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 15px;
+    padding: 15px;
+}
+
+.navbar__dropdown-userInfo {
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar__dropdown-fullName {
+    font-weight: bold;
+}
+
+.navbar__dropdown-profileImg {
+    height: 36px;
+    width: 36px;
+}
+
+.navbar__dropdown-userStatus {
+    color: dimgrey;
+}
+.navbar__dropdown-links {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    /* padding: 15px; */
+
+}
+
+.navbar__dropdown-link {
+    cursor: pointer;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.navbar__dropdown-link a {
+    display: inline-block;
+    width: 100%;
+}
+
+.navbar__dropdown-link:hover {
+    background-color: #1264a3;
+    color: white;
+}
+
+.changeStatus {
+    color: #1264a3;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.changeStatus:hover {
+    border-bottom: 1px solid #1264a3;
+}

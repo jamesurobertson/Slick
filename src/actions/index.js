@@ -1,9 +1,10 @@
 export const SEND_CHANNEL_MESSAGE = 'SEND_CHANNEL_MESSSAGE'
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL'
+export const UPDATE_CHANNEL_INFO = 'UPDATE_CHANNEL_INFO'
 
 export const UPDATE_TOKEN = 'UPDATE_TOKEN'
+export const LOGOUT = 'LOGOUT'
 export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER'
-export const UPDATE_CHANNEL_INFO = 'UPDATE_CHANNEL_INFO'
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS'
@@ -17,6 +18,13 @@ export const addChannel = channel => {
     return {
         type: ADD_CHANNEL,
         channel
+    }
+}
+
+export const logout = (session) => {
+    return {
+        type: LOGOUT,
+        session
     }
 }
 

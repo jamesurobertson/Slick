@@ -10,13 +10,13 @@
 
 .navbar-container {
     color: #BFBFBF;
+    border: 1px solid #502351
 
 }
 
 .navbar-channel-dms-container {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid #BFBFBF;
     padding: 15px;
 
 }

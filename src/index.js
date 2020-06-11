@@ -7,6 +7,7 @@ import './stylesheets/messageInput.css'
 import './stylesheets/signup.css'
 import './stylesheets/message.css'
 import './stylesheets/searchBar.css'
+import './stylesheets/navbarHeader.css'
 import App from "./components/App";
 import { Provider } from "react-redux";
 import configureStore from "./store/storeConfig";

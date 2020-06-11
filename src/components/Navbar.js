@@ -8,6 +8,7 @@ import {
 import Modal from "react-modal";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import NavbarHeader from './NavbarHeader'
 
 const Navbar = (props) => {
   const [showChannels, setShowChannels] = useState(false);
@@ -105,7 +106,9 @@ const Navbar = (props) => {
   return (
     <div className="navbar">
       <div className="navbar-container">
-        <div className="navbar-more"></div>
+        <div className="navbar-more">
+          <NavbarHeader/>
+        </div>
         <div className="navbar-channel-dms-container">
           <div className="navbar-channels-container">
             <div className="navbar__subheader">

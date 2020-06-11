@@ -2,6 +2,7 @@ import {
   UPDATE_TOKEN,
   UPDATE_CURRENT_USER,
   CHANGE_CHANNEL,
+  LOGOUT
 } from "../actions/index";
 
 const initialState = {
@@ -24,6 +25,8 @@ const updateSessionReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         activeChannel: action.channel,
       });
+    case LOGOUT:
+    return Object.assign({}, state, action.session)
     default:
       return state;
   }
