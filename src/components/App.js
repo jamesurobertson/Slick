@@ -9,15 +9,14 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
-        <ProtectedRoute
-          exact
-          path="/"
-          component={Home}
-          currentUserId={props.currentUserId}
-        />
         <AuthRoute
           path="/register"
           component={Signup}
+          currentUserId={props.currentUserId}
+        />
+        <ProtectedRoute
+          path="/"
+          component={Home}
           currentUserId={props.currentUserId}
         />
         {/* <AuthRoute

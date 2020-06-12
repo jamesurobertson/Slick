@@ -10,6 +10,7 @@ import './stylesheets/message.css'
 import './stylesheets/searchBar.css'
 import './stylesheets/navbarHeader.css'
 import './stylesheets/profile.css'
+import './stylesheets/editProfile.css'
 import 'emoji-mart/css/emoji-mart.css'
 import App from "./components/App";
 import { Provider } from "react-redux";

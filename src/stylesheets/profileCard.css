@@ -3,11 +3,14 @@
     flex-direction: column;
     border: 1px solid gray;
     border-radius: 5px;
+    background-color: whitesmoke;
 }
 
 .procard__procardImage {
     height: 300px;
     width: 300px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .procard__userInfo {
@@ -29,21 +32,37 @@
     display: flex;
     justify-content: center;
 }
-.procard__message-button {
-    color: white;
+.procard__button {
+    color: whitesmoke;
     font-size: 18px;
     font-weight: bold;
     outline: 0;
-    width: 200px;
+    width: 40%;
     height: 40px;
     padding: 10 15px;
     background-color: #1264a3;
     border: none;
+    border-radius: 5px;
+    box-shadow: ;
+
+}
+.procard__message-button:hover {
+    background-color: #3387c6;
+    color: white;
 }
 
-.procard__message-button:hover {
-    background-color: #3387c6
+.procard__editProfile-button:hover {
+    background-color: white;
 }
+
+
+.procard__editProfile-button {
+    margin-left: 20px;
+    color: #3387c6;
+    background-color: whitesmoke;
+    border: 1px solid #3387c6;
+}
+
 
 .ReactModal__Body--open {
     overflow-y: hidden;

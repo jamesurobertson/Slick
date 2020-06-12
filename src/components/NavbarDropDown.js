@@ -5,9 +5,6 @@ import { updateUserInfo, logout } from "../actions/index";
 const NavbarDropDown = (props) => {
   const { userInfo, updateUserInfo, logout } = props;
 
-  if (userInfo.userInfo) {
-  }
-
   const userLogout = (e) => {
     window.localStorage.removeItem("SLICK_ACCESS_TOKEN");
     window.localStorage.removeItem("SLICK_CURRENT_USER_ID");

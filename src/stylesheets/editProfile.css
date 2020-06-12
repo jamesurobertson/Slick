@@ -1,0 +1,79 @@
+.edit-profile-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 50px auto;
+    grid-template-areas:
+    'header header'
+    'inputs picture'
+}
+
+.edit-profile-form {
+    grid-area: inputs;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+.edit-form-input {
+    padding: 10px;
+}
+
+
+.edit-profile-title {
+    grid-area: header;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.edit-form-picture-container {
+    grid-area: picture;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60%;
+    width: 100%;
+}
+
+.edit-form-image {
+    height: 200px;
+    width: 200px;
+    border-radius: 3px;
+}
+
+.edit-profile-buttons-container {
+    padding-top: 20px;
+}
+
+.edit-profile-button, #upload-image-label {
+    color:whitesmoke;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    outline: 0;
+    width: 100%;
+    height: 40px;
+    padding: 10px 15px;
+    margin-top: 10px;
+    background-color: #1264a3;
+    border: none;
+    border-radius: 5px;
+}
+.edit-profile-button:hover, #upload-image-label:hover {
+    background-color: #3387c6;
+    color: white;
+}
+
+.edit-profile-cancel-button {
+    background-color: whitesmoke;
+    color: #1264a3;
+    border: 1px solid #1264a3;
+}
+
+.edit-profile-cancel-button:hover {
+    background-color: white;
+    color: #1264a3;
+}
+
+#icon-button-file {
+    display: none;
+}

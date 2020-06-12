@@ -3,24 +3,38 @@ import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import MainContent from "./MainContent";
-import { getChannels, getUserInfo, getAllMessages, getAllUsers } from "../actions/index";
+import {
+  getChannels,
+  getUserInfo,
+  getAllMessages,
+  getAllUsers,
+} from "../actions/index";
 
 const Home = (props) => {
   const userId = localStorage.getItem("SLICK_CURRENT_USER_ID");
-    const {getChannels, getUserInfo, getAllMessages, getAllUsers } = props
+  const {
+    getChannels,
+    getUserInfo,
+    getAllMessages,
+    getAllUsers,
+    messages,
+    users
+  } = props;
+
 
   useEffect(() => {
-      getChannels(userId)
-      getUserInfo(userId)
-  }, [getChannels, getUserInfo ,userId]);
+      getChannels(userId);
+      getUserInfo(userId);
+    }, [getChannels, getUserInfo, userId]);
+
 
   useEffect(() => {
-      getAllMessages()
-  }, [getAllMessages])
+    getAllMessages();
+  }, [getAllMessages]);
 
   useEffect(() => {
-    getAllUsers()
-}, [getAllUsers])
+    getAllUsers();
+  }, [getAllUsers, messages]);
 
   return (
     <div className="root-container">
@@ -33,6 +47,8 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    messages: state.messages,
+    users: state.users
   };
 };
 
@@ -41,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
     getChannels: (userId) => dispatch(getChannels(userId)),
     getUserInfo: (userId) => dispatch(getUserInfo(userId)),
     getAllMessages: () => dispatch(getAllMessages()),
-    getAllUsers: () => dispatch(getAllUsers())
+    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 

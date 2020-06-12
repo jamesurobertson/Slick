@@ -209,28 +209,6 @@ export const getUserInfo = (userId) => async dispatch => {
     }
   }
 
-  export const postChannelUpdate = (channelId, topic, numUsers) => async (dispatch) => {
-    try {
-        const res = await fetch(`http://localhost:8080/channel/${channelId}`,
-        {
-            method: 'PUT',
-            body: JSON.stringify({topic}),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
-            }
-        })
-
-      if (!res.ok) throw res;
-
-      const {channel} = await res.json()
-      dispatch(updateChannelInfo(channel))
-
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
 
   export const postAddChannel = channelName => async(dispatch) => {
       const encodedChannelName = encodeURIComponent(channelName)
@@ -281,3 +259,68 @@ export const postCreateChannel = name => async(dispatch) => {
           console.error(e)
       }
 }
+
+
+export const postImage = async img => {
+    const res = await fetch('http://localhost:8080/aws/post_file',
+    {
+        method: 'POST',
+        body: img,
+        headers: {
+            "Content-Type": "multipart/form-data;",
+            "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+        }
+    })
+
+    if (!res.ok) throw res
+
+    const response = await res.json()
+
+}
+
+
+export const putUpdateUserInfo = userInfo => async dispatch => {
+    try {
+        const res = await fetch(`http://localhost:8080/user/updateUser`,
+        {
+            method: 'PUT',
+            body: JSON.stringify(userInfo),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+        if (!res.ok) throw res
+
+        const user = await res.json()
+        dispatch(updateUserInfo(user))
+
+      } catch (e) {
+          console.error(e)
+      }
+}
+
+
+
+export const postChannelUpdate = (channelId, topic, numUsers) => async (dispatch) => {
+    try {
+        const res = await fetch(`http://localhost:8080/channel/${channelId}`,
+        {
+            method: 'PUT',
+            body: JSON.stringify({topic}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`
+            }
+        })
+
+      if (!res.ok) throw res;
+
+      const {channel} = await res.json()
+      dispatch(updateChannelInfo(channel))
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
