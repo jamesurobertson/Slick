@@ -40,7 +40,8 @@ const ChannelMessages = (props) => {
             userId,
             displayName,
             createdAt,
-            profileImageUrl
+            profileImageUrl,
+            fullName
           } = message;
           if (
             messageableType === "channel" &&
@@ -52,7 +53,7 @@ const ChannelMessages = (props) => {
                   <Message
                   addReaction={addReaction}
                     message={content}
-                    displayName={displayName}
+                    displayName={displayName || fullName}
                     messageId={id}
                     userId={userId}
                     profileImageUrl={profileImageUrl}

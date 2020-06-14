@@ -15,7 +15,6 @@ const Navbar = (props) => {
   const [showChannels, setShowChannels] = useState(false);
   const [showDms, setShowDms] = useState(false);
   const [navChannels, setNavChannels] = useState([]);
-  const [navDms, setNavDms] = useState([])
 
   const [channelModalIsOpen, setChannelModalIsOpen] = useState(false);
   const [dmModalIsOpen, setDmModalIsOpen] = useState(false);
@@ -56,12 +55,10 @@ const Navbar = (props) => {
   };
 
   const changeChannel = (e) => {
-      console.log(e.target.innerHTML)
     props.changeChannel([e.target.id, e.target.innerHTML]);
   };
 
   const changeDm = (e) => {
-    console.log(e.target.innerHTML)
 
     props.changeChannel([e.target.id, e.target.innerHTML]);
   };
@@ -189,7 +186,7 @@ const Navbar = (props) => {
             <div className="navbar-channels">
               {showChannels
                 ? navChannels.map((channel) => {
-                    if (channel.name.startsWith('-')) return
+                    if (channel.name.startsWith('-')) return ''
                     return (
                       <div
                         key={channel.id}
@@ -225,7 +222,7 @@ const Navbar = (props) => {
             <div className="navbar-dms">
             {showDms
                 ? navChannels.map((channel) => {
-                    if (channel.name.startsWith('#')) return
+                    if (channel.name.startsWith('#')) return ''
                     return (
                       <div
                         key={channel.id}
@@ -234,7 +231,7 @@ const Navbar = (props) => {
                         onClick={changeDm}
                       >
                         {`${channel.name.split(' ').slice(1).map(id => {
-                            if (id === currentUserId) return
+                            if (id === currentUserId) return ''
                             return users[id].fullName
                         }).join('')}`}
                       </div>

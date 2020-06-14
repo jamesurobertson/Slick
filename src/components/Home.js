@@ -17,8 +17,7 @@ const Home = (props) => {
     getUserInfo,
     getAllMessages,
     getAllUsers,
-    messages,
-    users,
+    users
   } = props;
 
 
@@ -30,7 +29,7 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllMessages();
-  }, [getAllMessages]);
+  }, [getAllMessages, users]);
 
   useEffect(() => {
     getAllUsers();
@@ -47,8 +46,7 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.messages,
-    users: state.users
+      users: state.users
   };
 };
 

@@ -22,9 +22,12 @@
     z-index: 1;
     outline: 0;
     border-radius: 400px;
-    height: 40px;
-    width: 40px;
+    height: 36px;
+    width: 36px;
+}
 
+.fa-pencil-alt {
+    font-size: 15px;
 }
 
 .navbarHeader__workspaceName {

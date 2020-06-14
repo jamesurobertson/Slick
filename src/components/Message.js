@@ -57,12 +57,10 @@ const Message = (props) => {
   };
 
   const openThread = (e) => {
-    console.log("open thread");
   };
 
   const openEmoji = (e) => {
     document.body.style.overflowY = 'hidden'
-    console.log(e.target.getBoundingClientRect())
 
     setEmojiShown(!emojiShown);
   };
@@ -102,7 +100,7 @@ const Message = (props) => {
       <div className="message-content">
         {/* TODO: On timestamp hover show date */}
         <div className="messageSender">
-          {props.displayName}
+          {props.displayName || 'James'}
           <span className="message-timestamp"> {props.createdAt}</span>
         </div>
         <div className="messageContent">{props.message}</div>

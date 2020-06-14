@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
-import {Link} from 'react-router-dom'
-
+// import {Link} from 'react-router-dom'
+// TODO: add direct links to channels
 import { postChannelUpdate } from "../actions/index";
 
 const ChannelHeader = (props) => {

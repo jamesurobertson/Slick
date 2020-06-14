@@ -16,7 +16,6 @@ const DmBrowser = props => {
             <div className='dmbrowser-main'>
                 {
                     Object.values(users).map(user => {
-                        {}
                         return (
                             <div key={`useCard-user-${user.id}`}>
                                 <UserCard closeDmModal={closeDmModal} user={user}/>

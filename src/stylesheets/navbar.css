@@ -17,7 +17,6 @@
 .navbar-channel-dms-container {
     display: flex;
     flex-direction: column;
-    padding: 15px;
 
 }
 
@@ -28,9 +27,6 @@
 
 }
 
-.navbar-channels, .navbar-dms {
-    padding: 0 20px
-}
 
 .navbar__subheader-name {
     padding-left: 10px;
@@ -44,6 +40,7 @@
     align-items: center;
     width: 170px;
     cursor: pointer;
+    padding: 0 10px;
 }
 
 .arrow-right {
@@ -81,10 +78,21 @@
 .fa-plus {
     font-size: inherit;
 }
+
+.navbar-channels, .navbar-dms {
+    /* padding: 0 15px; */
+}
+
 .navbar-channel {
-    padding: 5px 0;
+    padding: 5px 30px;
     cursor: pointer;
 }
+
+.navbar-channel:hover, .navbar-dm:hover {
+    background-color: #341135;
+    width: 100%;
+}
+
 
 
 .addChannel-form-title {

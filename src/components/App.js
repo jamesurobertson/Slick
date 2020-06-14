@@ -1,36 +1,36 @@
-import React, {useState, useEffect}  from "react";
+import React  from "react";
 import { connect } from "react-redux";
-import socketIoClient from 'socket.io-client'
+// import socketIoClient from 'socket.io-client'
 import { Switch, BrowserRouter } from "react-router-dom";
 import { ProtectedRoute, AuthRoute } from "../Routes";
 import Home from "./Home";
 import Signup from "./Signup";
 
-const ENDPOINT='http://localhost:8080'
+// const ENDPOINT='http://localhost:8080'
 
 function App(props) {
 
-    const [socket, setSocket] = useState(null)
-    const [socketConnected, setSocketConnected] = useState(false);
+    // const [socket, setSocket] = useState(null)
+    // const [socketConnected, setSocketConnected] = useState(false);
 
-    useEffect(() => {
-        setSocket(socketIoClient(ENDPOINT));
-    }, [])
+    // useEffect(() => {
+    //     setSocket(socketIoClient(ENDPOINT));
+    // }, [])
 
-    useEffect(() => {
-        if (!socket) return
+    // useEffect(() => {
+    //     if (!socket) return
 
-        socket.on('connect', () => {
-            setSocketConnected(socket.connected);
-          });
-          socket.on('disconnect', () => {
-            setSocketConnected(socket.connected);
-          });
+    //     socket.on('connect', () => {
+    //         setSocketConnected(socket.connected);
+    //       });
+    //       socket.on('disconnect', () => {
+    //         setSocketConnected(socket.connected);
+    //       });
 
-          socket.on("getDate", data => {
-          });
+    //       socket.on("getDate", data => {
+    //       });
 
-    }, [socket])
+    // }, [socket])
 
 
   return (

@@ -6,6 +6,7 @@ export const UPDATE_TOKEN = "UPDATE_TOKEN";
 export const LOGOUT = "LOGOUT";
 export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+export const UPDATE_USERS = "UPDATE_USERS"
 
 export const RECEIVE_CHANNELS = "RECEIVE_CHANNELS";
 export const RECEIVE_USERS = "RECEIVE_USERS";
@@ -27,6 +28,12 @@ export const logout = (session) => {
   };
 };
 
+export const updateUsers = (user) => {
+    return {
+        type: UPDATE_USERS,
+        user
+    }
+}
 export const sendChannelMessage = (message) => {
   return {
     type: SEND_CHANNEL_MESSAGE,
@@ -129,7 +136,7 @@ export const getAllMessages = () => async (dispatch) => {
         messageableType,
         messageableId,
         createdAt,
-        User: { displayName, profileImageUrl },
+        User: { fullName, displayName, profileImageUrl },
       } = message;
       return {
         id,
@@ -140,6 +147,7 @@ export const getAllMessages = () => async (dispatch) => {
         createdAt,
         displayName,
         profileImageUrl,
+        fullName
       };
     });
 
@@ -251,8 +259,6 @@ export const postAddDm = (toMessageId) => async (dispatch) => {
       if (!res.ok) throw res;
 
       const {payload: channel, userToMessage} = await res.json();
-      console.log(channel)
-      console.log(userToMessage)
       dispatch(addChannel(channel));
       dispatch(changeChannel([channel.id, userToMessage]));
     } catch (e) {
@@ -299,24 +305,27 @@ export const postImage = (img, userInfo) => async (dispatch) => {
 
     const user = await res.json();
     dispatch(updateUserInfo(user));
-  } catch (e) {
+    dispatch(updateUsers(user))
+    // console.log(user)
+} catch (e) {
     console.error(e);
-  }
+}
 
-  if (!img) return;
-  try {
+if (!img) return;
+try {
     const res = await fetch("http://localhost:8080/aws/post_file", {
-      method: "POST",
-      body: img,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
-      },
+        method: "POST",
+        body: img,
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+        },
     });
 
     if (!res.ok) throw res;
 
     const response = await res.json();
     dispatch(updateUserInfo(response));
+    dispatch(updateUsers(response))
   } catch (e) {
     console.error(e);
   }

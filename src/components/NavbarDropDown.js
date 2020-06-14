@@ -75,11 +75,6 @@ const NavbarDropDown = (props) => {
     updateUserInfo(user);
   };
 
-  const openProfile = (e) => {
-
-  }
-
-
   if (!userInfo.userInfo) return null;
   return (
       <>

@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import { TextField, FormHelperText } from "@material-ui/core";
 import {
   postImage,
-  putUpdateUserInfo,
-  getAllUsers,
-  getAllMessages,
 } from "../actions/index";
 
 const EditProfile = (props) => {
@@ -55,7 +52,10 @@ const EditProfile = (props) => {
     setImageFile('')
 
     closeModal();
-    closeDropDown()
+
+    if (closeDropDown) {
+        closeDropDown()
+    }
   };
 
 

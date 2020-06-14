@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { postChannelMessage } from "../actions/index";
 import { Picker } from "emoji-mart";
 
 const MessageInput = (props) => {
-  const { channelId, postChannelMessage, channels, userInfo, channelName } = props;
+  const { channelId, postChannelMessage, userInfo, channelName } = props;
   const [message, setMessage] = useState("");
   const [emojiActive, setEmojiActive] = useState(false);
 
@@ -71,7 +71,6 @@ const mapStateToProps = (state) => {
   return {
     channelId: state.session.activeChannel,
     channelName: state.session.activeChannel[1],
-    channels: state.channels,
     userInfo: state.userInfo,
   };
 };

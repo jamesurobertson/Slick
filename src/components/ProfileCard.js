@@ -11,19 +11,14 @@ const ProfileCard = (props) => {
   };
 
   const messageUser = (e) => {
-    console.log(user)
-    console.log(`- ${user.id} ${currentUser}`)
     let hasDm
     for (let i = 0; i < Object.values(channels).length; i++) {
         const name = Object.values(channels)[i].name
         const channelId = Object.values(channels)[i].id
         if (name === `- ${user.id} ${currentUser}`) {
-            console.log(`first`)
             hasDm = [channelId, user.fullName]
             break
         } else if (name === `- ${currentUser} ${user.id}`) {
-            console.log(`second`)
-            console.log(channelId)
             hasDm = [channelId, user.fullName]
             break
         }
@@ -40,7 +35,9 @@ const ProfileCard = (props) => {
 
   if (!currentUser || !userId) {
     return null;
+
   }
+  console.log(currentUser, userId)
   return (
       <div className="procard-container">
         <img
@@ -53,13 +50,7 @@ const ProfileCard = (props) => {
           <div className="procard__title">{user.title}</div>
         </div>
         <div className="procard__buttons">
-          <button
-            onClick={messageUser}
-            className="procard__button procard__message-button"
-          >
-            Message
-          </button>
-          {currentUser == userId ? (
+          {parseInt(currentUser) === parseInt(userId) ? (
             <button
               onClick={editProfile}
               className="procard__button procard__editProfile-button"
@@ -67,7 +58,12 @@ const ProfileCard = (props) => {
               Edit Profile
             </button>
           ) : (
-            ""
+            <button
+            onClick={messageUser}
+            className="procard__button procard__message-button"
+          >
+            Message
+          </button>
           )}
         </div>
       </div>

@@ -11,7 +11,6 @@ const NavbarHeader = (props) => {
 
   function openDropDownModal(e) {
 
-    console.log(e.target)
     setDropDownModalIsOpen(true);
   }
 
@@ -21,7 +20,6 @@ const NavbarHeader = (props) => {
   }
 
   function openDmModal(e) {
-    console.log(e.target)
     setDmModalIsOpen(true);
   }
 
@@ -73,7 +71,9 @@ const NavbarHeader = (props) => {
           <button
             onClick={openDmModal}
             className="navbarHeader__composeMessage"
-          ></button>
+          >
+              <i className="fas fa-pencil-alt"></i>
+          </button>
 
 
         </div>
