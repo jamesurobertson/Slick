@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import { postChannelUpdate } from "../actions/index";
 
 const ChannelHeader = (props) => {
-  const { postChannelUpdate, channel} = props;
+  const { postChannelUpdate, channel, channelName} = props;
   const [modalIsOpen, setIsOpen] = useState(false);
 //   const [numUsers, setNumUsers] = useState('35')
   Modal.setAppElement("#root");
@@ -54,7 +54,7 @@ const ChannelHeader = (props) => {
   return (
     <div className="channel-header-outer">
       <div className="channel-header-inner">
-        <div className="channel__header-name">{channel.name}</div>
+        <div className="channel__header-name">{channelName}</div>
         <div className="channel__header-info">
           <div className="channel__header-members">
             <i className="far fa-user"></i>{channel.numUsers} |
@@ -109,6 +109,7 @@ const ChannelHeader = (props) => {
 const mapStateToProps = (state) => {
   return {
     channel: state.channels[state.session.activeChannel[0]],
+    channelName: state.session.activeChannel[1]
   };
 };
 

@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import {changeChannel, postAddDm} from '../actions/index'
 
 const ProfileCard = (props) => {
-  const { users, userId, currentUser, openEditProfile} = props;
+  const { users, userId, currentUser, openEditProfile, channels, postAddDm, changeChannel} = props;
   const user = users[userId];
 
   const editProfile = (e) => {
@@ -10,7 +11,29 @@ const ProfileCard = (props) => {
   };
 
   const messageUser = (e) => {
-    console.log("message user!");
+    console.log(user)
+    console.log(`- ${user.id} ${currentUser}`)
+    let hasDm
+    for (let i = 0; i < Object.values(channels).length; i++) {
+        const name = Object.values(channels)[i].name
+        const channelId = Object.values(channels)[i].id
+        if (name === `- ${user.id} ${currentUser}`) {
+            console.log(`first`)
+            hasDm = [channelId, user.fullName]
+            break
+        } else if (name === `- ${currentUser} ${user.id}`) {
+            console.log(`second`)
+            console.log(channelId)
+            hasDm = [channelId, user.fullName]
+            break
+        }
+    }
+
+    if (hasDm) {
+        changeChannel(hasDm)
+    } else {
+        postAddDm(user.id)
+    }
   };
 
 
@@ -23,7 +46,7 @@ const ProfileCard = (props) => {
         <img
           className="procard__procardImage"
           alt="Profile Card"
-          src="http://localhost:8080/aws/get_file/img-1591895220578-403534187"
+          src={user.profileImageUrl}
         />
         <div className="procard__userInfo">
           <div className="procard__fullName">{user.fullName}</div>
@@ -56,7 +79,15 @@ const mapStateToProps = (state) => {
   return {
     users: state.users,
     currentUser: state.session.currentUserId,
+    channels: state.channels,
   };
 };
 
-export default connect(mapStateToProps)(ProfileCard);
+const mapDispatchToProps = dispatch => {
+    return {
+        changeChannel: (channel) => dispatch(changeChannel(channel)),
+        postAddDm: (toMessageId) => dispatch(postAddDm(toMessageId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileCard);

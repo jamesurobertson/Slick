@@ -8,8 +8,8 @@ import EditProfile from "./EditProfile";
 const Message = (props) => {
   const { addReaction, profileImageUrl } = props;
   const [emojiShown, setEmojiShown] = useState(false);
-  const [imgX, setImgX] = useState(null);
-  const [imgY, setImgY] = useState(null);
+  const [profCardX, setprofCardX] = useState(null);
+  const [profCardY, setprofCardY] = useState(null);
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
 
@@ -26,8 +26,8 @@ const Message = (props) => {
 
   const profileCardStyles = {
     content: {
-      top: imgY,
-      left: imgX,
+      top: profCardY,
+      left: profCardX,
       right: "auto",
       bottom: "auto",
       marginRight: "-50%",
@@ -61,6 +61,9 @@ const Message = (props) => {
   };
 
   const openEmoji = (e) => {
+    document.body.style.overflowY = 'hidden'
+    console.log(e.target.getBoundingClientRect())
+
     setEmojiShown(!emojiShown);
   };
 
@@ -68,11 +71,11 @@ const Message = (props) => {
     const rect = e.target.getBoundingClientRect();
     //429
     if (rect.y > 484) {
-      setImgY(485);
+      setprofCardY(485);
     } else {
-      setImgY(rect.y);
+      setprofCardY(rect.y);
     }
-    setImgX(rect.x + 45);
+    setprofCardX(rect.x + 45);
     setShowProfileCard(true);
   };
 
@@ -80,6 +83,12 @@ const Message = (props) => {
     closeUserCard();
     setShowEditProfile(true);
   };
+
+  const onEmojiPicked = (e) => {
+    addReaction(e, props.messageId)
+    setEmojiShown(!setEmojiShown)
+    document.body.style.overflowY = 'visible'
+  }
 
   return (
     <>
@@ -118,9 +127,9 @@ const Message = (props) => {
             emojiTooltip
             title="Slick Emojis for you"
             emoji="point_up"
-            onSelect={(event, messageId) => addReaction(event, props.messageId)}
+            onSelect={onEmojiPicked}
             autoFocus
-            style={{ position: "absolute", top: "-445px", right: "10px" }}
+            style={{ position: "absolute", bottom: '75px', right: '6px'}}
           />
         ) : (
           ""

@@ -18,7 +18,7 @@ const Home = (props) => {
     getAllMessages,
     getAllUsers,
     messages,
-    users
+    users,
   } = props;
 
 
@@ -34,7 +34,7 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllUsers();
-  }, [getAllUsers, messages]);
+  }, [getAllUsers]);
 
   return (
     <div className="root-container">

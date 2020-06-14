@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import NavbarDropDown from './NavbarDropDown'
+import DmBrowser from "./DmBrowser";
 
 const NavbarHeader = (props) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [dropDownModalIsOpen, setDropDownModalIsOpen] = useState(false);
+  const [dmModalIsOpen, setDmModalIsOpen] = useState(false);
 
   Modal.setAppElement("#root");
 
-  function openModal() {
-    setIsOpen(true);
+  function openDropDownModal(e) {
+
+    console.log(e.target)
+    setDropDownModalIsOpen(true);
   }
 
-  function closeModal(e) {
+  function closeDropDownModal(e) {
     e.preventDefault();
-    setIsOpen(false);
+    setDropDownModalIsOpen(false);
+  }
+
+  function openDmModal(e) {
+    console.log(e.target)
+    setDmModalIsOpen(true);
+  }
+
+  function closeDmModal(e) {
+    e.preventDefault();
+    setDmModalIsOpen(false);
   }
 
   const customStyles = {
@@ -33,34 +47,54 @@ const NavbarHeader = (props) => {
     },
   };
 
-  const composeMessage = (e) => {
-    e.preventDefault();
-    console.log(`compose message!`);
+  const customStyles2 = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      zIndex: '1000'
+    },
   };
-
 
   return (
     <>
-      <div onClick={openModal} className="navbar-more-container">
-        <div className="navbarHeader-info">
+      <div className="navbar-more-container">
+        <div className="navbarHeader-info" onClick={openDropDownModal}>
           <div className="navbarHeader__workspaceName">Slick</div>
           <div className="navbarHeader__userName">James Robertson</div>
         </div>
-        <div>
+        <div className='navbarHeader__composeMessage'>
           <button
-            onClick={composeMessage}
+            onClick={openDmModal}
             className="navbarHeader__composeMessage"
           ></button>
+
+
         </div>
       </div>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={dropDownModalIsOpen}
+        onRequestClose={closeDropDownModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
-          <NavbarDropDown/>
+          <NavbarDropDown closeDropDown={() => setDropDownModalIsOpen(false)}/>
       </Modal>
+      <Modal
+        isOpen={dmModalIsOpen}
+        onRequestClose={closeDmModal}
+        style={customStyles2}
+        contentLabel="Example Modal"
+      >
+          <DmBrowser closeDmModal={() => setDmModalIsOpen(false)}/>
+      </Modal>
+
     </>
   );
 };

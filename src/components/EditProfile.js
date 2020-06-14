@@ -12,11 +12,12 @@ const EditProfile = (props) => {
   const {
     userInfo,
     closeModal,
-    putUpdateUserInfo,
+    postImage,
+    closeDropDown
   } = props;
 
   const [imageUrl, setImageUrl] = useState(userInfo.userInfo.profileImageUrl);
-  const [imageFile, setImageFile] = useState("");
+  const [imageFile, setImageFile] = useState('');
 
   const [fullName, setFullName] = useState(userInfo.userInfo.fullName);
   const [displayName, setDisplayName] = useState(userInfo.userInfo.displayName);
@@ -25,22 +26,24 @@ const EditProfile = (props) => {
 
   const onChange = (e) => {
     const file = e.currentTarget.files[0];
+    setImageFile(file);
     const fileReader = new FileReader();
-    fileReader.onloadend = () => {
-      setImageFile(file);
-      setImageUrl(fileReader.result);
-    };
 
     if (file) {
-      fileReader.readAsDataURL(file);
+        fileReader.readAsDataURL(file);
     }
+            fileReader.onloadend = () => {
+              setImageUrl(fileReader.result);
+            };
   };
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("img", imageUrl);
+    let formData;
+    if (imageFile) {
+        formData = new FormData();
+        formData.append("img", imageFile);
+    }
 
     const user = {
       fullName,
@@ -48,12 +51,21 @@ const EditProfile = (props) => {
       title,
       email,
     };
+    postImage(formData, user)
+    setImageFile('')
 
-    putUpdateUserInfo(user);
     closeModal();
-
-    // postImage(formData)
+    closeDropDown()
   };
+
+
+  const closeAll = () => {
+      closeModal()
+
+      if (closeDropDown) {
+          closeDropDown()
+      }
+  }
 
   const formChangeHandler = (e) => {
     const value = e.target.value;
@@ -155,7 +167,7 @@ const EditProfile = (props) => {
         </label>
         <div className="edit-profile-buttons-container">
           <button
-            onClick={() => closeModal()}
+            onClick={closeAll}
             className="edit-profile-button edit-profile-cancel-button"
           >
             Cancel
@@ -181,7 +193,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    putUpdateUserInfo: (user) => dispatch(putUpdateUserInfo(user)),
+    postImage: (formData, user) => dispatch(postImage(formData, user))
   };
 };
 

@@ -1,0 +1,40 @@
+
+.userCardContainer {
+    display: flex;
+    padding: 15px 10px;
+    border-top: 1px solid #bfbfbf;
+    width: 500px;
+}
+
+.userCardContainer:hover {
+    background-color: #F9F9F9;
+}
+
+.userCard-image {
+    height: 45px;
+    width: 45px;
+}
+
+.userCardUserInfo {
+    display: flex;
+    padding-left: 15px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.userCard-names {
+    display: flex;
+}
+
+
+.userCard-displayName {
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.dmbrowswer-header {
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}

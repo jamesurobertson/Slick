@@ -9,19 +9,22 @@ import Modal from "react-modal";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import NavbarHeader from './NavbarHeader'
+import DmBrowse from './DmBrowser'
 
 const Navbar = (props) => {
   const [showChannels, setShowChannels] = useState(false);
   const [showDms, setShowDms] = useState(false);
   const [navChannels, setNavChannels] = useState([]);
+  const [navDms, setNavDms] = useState([])
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [channelModalIsOpen, setChannelModalIsOpen] = useState(false);
+  const [dmModalIsOpen, setDmModalIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [addChannelInput, setAddChannelInput] = useState("");
 
   Modal.setAppElement("#root");
 
-  const { channels, postAddChannel, postCreateChannel } = props;
+  const { channels, postAddChannel, postCreateChannel, currentUserId, users } = props;
 
   useEffect(() => {
     (async () => {
@@ -34,7 +37,7 @@ const Navbar = (props) => {
 
       const allChannels = await res.json();
       const filteredOptions = allChannels.filter(
-        (channelOption) => !channels.hasOwnProperty(channelOption.id)
+        (channel) => !channels.hasOwnProperty(channel.id) && channel.name[0] === '#'
       ).map(option => option.name)
         setOptions(filteredOptions);
     })();
@@ -53,22 +56,39 @@ const Navbar = (props) => {
   };
 
   const changeChannel = (e) => {
+      console.log(e.target.innerHTML)
     props.changeChannel([e.target.id, e.target.innerHTML]);
   };
 
-  // + button to add / create channels TODO: a better name?
-  const browseChannels = (e) => {
-    setIsOpen(true);
+  const changeDm = (e) => {
+    console.log(e.target.innerHTML)
+
+    props.changeChannel([e.target.id, e.target.innerHTML]);
   };
 
-  function closeModal() {
-    setIsOpen(false);
+
+
+  // + button to add / create channels TODO: a better name?
+  const browseChannels = (e) => {
+    setChannelModalIsOpen(true);
+  };
+
+  const browseUserDms = (e) => {
+      setDmModalIsOpen(true)
+  }
+
+  function closeChannelModal() {
+    setChannelModalIsOpen(false);
+  }
+
+  function closeDmModal() {
+    setDmModalIsOpen(false);
   }
 
   // cancel from modal
   const closeNewChannel = (e) => {
     e.preventDefault();
-    setIsOpen(false);
+    setChannelModalIsOpen(false);
   };
 
   // adds a channel to users navbar
@@ -80,7 +100,7 @@ const Navbar = (props) => {
       postCreateChannel(addChannelInput)
     }
     setAddChannelInput('')
-    closeModal();
+    closeChannelModal();
   };
 
   const addChannelInputHandler = e => {
@@ -99,6 +119,7 @@ const Navbar = (props) => {
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.6)",
+      zIndex: '1000'
     },
   };
 
@@ -124,8 +145,8 @@ const Navbar = (props) => {
                 <i className="fas fa-plus"></i>
               </button>
               <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
+                isOpen={channelModalIsOpen}
+                onRequestClose={closeChannelModal}
                 style={customStyles}
                 contentLabel="Example Modal"
               >
@@ -168,6 +189,7 @@ const Navbar = (props) => {
             <div className="navbar-channels">
               {showChannels
                 ? navChannels.map((channel) => {
+                    if (channel.name.startsWith('-')) return
                     return (
                       <div
                         key={channel.id}
@@ -188,12 +210,37 @@ const Navbar = (props) => {
                 <div className={showDms ? "arrow-down" : "arrow-right"}></div>
                 <div className="navbar__subheader-name"> Direct Messagess</div>
               </div>
-              <button className="navbar-dm-browser">
+              <button onClick={browseUserDms}className="navbar-dm-browser">
                 <i className="fas fa-plus"></i>
               </button>
+              <Modal
+                isOpen={dmModalIsOpen}
+                onRequestClose={closeDmModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+                  <DmBrowse closeDmModal={closeDmModal}/>
+              </Modal>
             </div>
             <div className="navbar-dms">
-              {/* TODO dynamicaly add users who you are messaging */}
+            {showDms
+                ? navChannels.map((channel) => {
+                    if (channel.name.startsWith('#')) return
+                    return (
+                      <div
+                        key={channel.id}
+                        className="navbar-channel"
+                        id={channel.id}
+                        onClick={changeDm}
+                      >
+                        {`${channel.name.split(' ').slice(1).map(id => {
+                            if (id === currentUserId) return
+                            return users[id].fullName
+                        }).join('')}`}
+                      </div>
+                    );
+                  })
+                : ""}
             </div>
           </div>
         </div>
@@ -205,6 +252,8 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     channels: state.channels,
+    users: state.users,
+    currentUserId: state.session.currentUserId,
   };
 };
 

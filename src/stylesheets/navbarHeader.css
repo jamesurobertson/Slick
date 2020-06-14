@@ -12,6 +12,10 @@
     cursor: pointer;
 }
 
+.navbarHeader-info {
+    width: 100%;
+}
+
 .navbarHeader__composeMessage {
     border: 1px solid white;
     background-color: white;
@@ -98,4 +102,8 @@
 
 .changeStatus:hover {
     border-bottom: 1px solid #1264a3;
+}
+
+.navbarHeader__composeMessage {
+    z-index: 500;
 }

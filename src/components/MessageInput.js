@@ -4,9 +4,8 @@ import { postChannelMessage } from "../actions/index";
 import { Picker } from "emoji-mart";
 
 const MessageInput = (props) => {
-  const { channelId, postChannelMessage, channels, userInfo } = props;
+  const { channelId, postChannelMessage, channels, userInfo, channelName } = props;
   const [message, setMessage] = useState("");
-  const [channelName, setChannelName] = useState("");
   const [emojiActive, setEmojiActive] = useState(false);
 
   const postMessage = (e) => {
@@ -22,15 +21,6 @@ const MessageInput = (props) => {
   const messageChange = (e) => {
     setMessage(e.target.value);
   };
-
-  useEffect(() => {
-    let vals = Object.values(channels);
-    for (let i = 0; i < vals.length; i++) {
-      if (parseInt(channelId) === vals[i].id) {
-        setChannelName(vals[i].name);
-      }
-    }
-  }, [channels, channelName, channelId]);
 
   const pickEmoji = (e) => {
     e.preventDefault();
@@ -80,6 +70,7 @@ const MessageInput = (props) => {
 const mapStateToProps = (state) => {
   return {
     channelId: state.session.activeChannel,
+    channelName: state.session.activeChannel[1],
     channels: state.channels,
     userInfo: state.userInfo,
   };
