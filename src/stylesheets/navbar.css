@@ -79,13 +79,40 @@
     font-size: inherit;
 }
 
+.fa-times {
+    font-size: 14px;
+}
+
 .navbar-channels, .navbar-dms {
     /* padding: 0 15px; */
 }
 
 .navbar-channel {
-    padding: 5px 30px;
+    padding: 0 10px 0 30px;
     cursor: pointer;
+    height: 29px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.channel-delete-button {
+    height: 25px;
+    width: 25px;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    padding: 0;
+    outline: 0;
+    color: #BFBFBF;
+    display: none;
+}
+
+.channel-delete-button:hover {
+    background-color: rgba(255,255,255, .10);
+}
+
+.navbar-channel:hover .channel-delete-button {
+    display: block;
 }
 
 .navbar-channel:hover, .navbar-dm:hover {

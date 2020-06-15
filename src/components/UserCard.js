@@ -26,6 +26,7 @@ const UserCard = (props) => {
             hasDm = [channelId, user.fullName]
             break
         } else if (name === `- ${currentUser} ${userId}`) {
+
             hasDm = [channelId, user.fullName]
             break
         }

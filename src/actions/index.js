@@ -13,6 +13,7 @@ export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_MESSAGES = "RECEIVE_MESSAGES";
 
 export const ADD_CHANNEL = "ADD_CHANNEL";
+export const REMOVE_CHANNEL = 'REMOVE_CHANNEL'
 
 export const addChannel = (channel) => {
   return {
@@ -27,6 +28,13 @@ export const logout = (session) => {
     session,
   };
 };
+
+export const removeChannel = channel => {
+    return {
+        type: REMOVE_CHANNEL,
+        channel
+    }
+}
 
 export const updateUsers = (user) => {
   return {
@@ -115,6 +123,25 @@ export const getChannels = (userId) => async (dispatch) => {
     console.error(e);
   }
 };
+
+export const deleteRemoveChannel = channelId => async dispatch => {
+    try {
+        const res = await fetch(`http://localhost:8080/channel/${channelId}`, {
+            method: 'DELETE',
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+            },
+          });
+
+        if (!res.ok) throw res
+
+        const channel = await res.json()
+        dispatch(removeChannel(channel))
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 export const getAllMessages = () => async (dispatch) => {
   try {
