@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Picker } from "emoji-mart";
+// import { Picker } from "emoji-mart";
 import Modal from "react-modal";
 import ProfileCard from "./ProfileCard";
 import EditProfile from "./EditProfile";
 
 const Message = (props) => {
-  const { addReaction, profileImageUrl } = props;
+  const { profileImageUrl } = props;
   const [emojiShown, setEmojiShown] = useState(false);
   const [profCardX, setprofCardX] = useState(null);
   const [profCardY, setprofCardY] = useState(null);
@@ -82,11 +82,14 @@ const Message = (props) => {
     setShowEditProfile(true);
   };
 
-  const onEmojiPicked = (e) => {
-    addReaction(e, props.messageId)
-    setEmojiShown(!setEmojiShown)
-    document.body.style.overflowY = 'visible'
-  }
+//   const onEmojiPicked = (e) => {
+//     const emojiObj = {id: e.id, skin: e.skin}
+
+//     postReaction(emojiObj, props.messageId)
+//     setEmojiShown(!setEmojiShown)
+//     document.body.style.overflowY = 'visible'
+//   }
+
 
   return (
     <>
@@ -120,18 +123,6 @@ const Message = (props) => {
         </button>
       </div>
       <div className="message-emoji-picker">
-        {emojiShown ? (
-          <Picker
-            emojiTooltip
-            title="Slick Emojis for you"
-            emoji="point_up"
-            onSelect={onEmojiPicked}
-            autoFocus
-            style={{ position: "absolute", bottom: '75px', right: '6px'}}
-          />
-        ) : (
-          ""
-        )}
       </div>
       <Modal
         isOpen={showProfileCard}
@@ -153,4 +144,15 @@ const Message = (props) => {
   );
 };
 
-export default connect()(Message);
+const msp = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+}
+
+export default connect(msp, mapDispatchToProps)(Message);

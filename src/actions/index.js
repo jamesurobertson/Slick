@@ -6,13 +6,14 @@ export const UPDATE_TOKEN = "UPDATE_TOKEN";
 export const LOGOUT = "LOGOUT";
 export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
-export const UPDATE_USERS = "UPDATE_USERS"
+export const UPDATE_USERS = "UPDATE_USERS";
 
 export const RECEIVE_CHANNELS = "RECEIVE_CHANNELS";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_MESSAGES = "RECEIVE_MESSAGES";
 
 export const ADD_CHANNEL = "ADD_CHANNEL";
+export const REMOVE_CHANNEL = 'REMOVE_CHANNEL'
 
 export const addChannel = (channel) => {
   return {
@@ -28,12 +29,19 @@ export const logout = (session) => {
   };
 };
 
-export const updateUsers = (user) => {
+export const removeChannel = channel => {
     return {
-        type: UPDATE_USERS,
-        user
+        type: REMOVE_CHANNEL,
+        channel
     }
 }
+
+export const updateUsers = (user) => {
+  return {
+    type: UPDATE_USERS,
+    user,
+  };
+};
 export const sendChannelMessage = (message) => {
   return {
     type: SEND_CHANNEL_MESSAGE,
@@ -116,6 +124,24 @@ export const getChannels = (userId) => async (dispatch) => {
   }
 };
 
+export const deleteRemoveChannel = channelId => async dispatch => {
+    try {
+        const res = await fetch(`http://localhost:8080/channel/${channelId}`, {
+            method: 'DELETE',
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+            },
+          });
+
+        if (!res.ok) throw res
+
+        const channel = await res.json()
+        dispatch(removeChannel(channel))
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 export const getAllMessages = () => async (dispatch) => {
   try {
@@ -147,10 +173,9 @@ export const getAllMessages = () => async (dispatch) => {
         createdAt,
         displayName,
         profileImageUrl,
-        fullName
+        fullName,
       };
     });
-
     dispatch(receiveMessages(messPlusDisplayName));
   } catch (e) {
     console.error(e);
@@ -242,30 +267,26 @@ export const postAddChannel = (channelName) => async (dispatch) => {
 };
 
 export const postAddDm = (toMessageId) => async (dispatch) => {
-    try {
-      const body = {toMessageId}
-      const res = await fetch(
-        `http://localhost:8080/directMessage`,
-        {
-          body: JSON.stringify(body),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
-          },
-        }
-      );
+  try {
+    const body = { toMessageId };
+    const res = await fetch(`http://localhost:8080/directMessage`, {
+      body: JSON.stringify(body),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+      },
+    });
 
-      if (!res.ok) throw res;
+    if (!res.ok) throw res;
 
-      const {payload: channel, userToMessage} = await res.json();
-      dispatch(addChannel(channel));
-      dispatch(changeChannel([channel.id, userToMessage]));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+    const { payload: channel, userToMessage } = await res.json();
+    dispatch(addChannel(channel));
+    dispatch(changeChannel([channel.id, userToMessage]));
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export const postCreateChannel = (name) => async (dispatch) => {
   try {
@@ -290,7 +311,6 @@ export const postCreateChannel = (name) => async (dispatch) => {
 };
 
 export const postImage = (img, userInfo) => async (dispatch) => {
-
   try {
     const res = await fetch(`http://localhost:8080/user/updateUser`, {
       method: "PUT",
@@ -305,27 +325,26 @@ export const postImage = (img, userInfo) => async (dispatch) => {
 
     const user = await res.json();
     dispatch(updateUserInfo(user));
-    dispatch(updateUsers(user))
-    // console.log(user)
-} catch (e) {
+    dispatch(updateUsers(user));
+  } catch (e) {
     console.error(e);
-}
+  }
 
-if (!img) return;
-try {
+  if (!img) return;
+  try {
     const res = await fetch("http://localhost:8080/aws/post_file", {
-        method: "POST",
-        body: img,
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
-        },
+      method: "POST",
+      body: img,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+      },
     });
 
     if (!res.ok) throw res;
 
     const response = await res.json();
     dispatch(updateUserInfo(response));
-    dispatch(updateUsers(response))
+    dispatch(updateUsers(response));
   } catch (e) {
     console.error(e);
   }

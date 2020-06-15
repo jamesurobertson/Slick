@@ -4,12 +4,13 @@ import {
   changeChannel,
   postAddChannel,
   postCreateChannel,
+  deleteRemoveChannel
 } from "../actions/index";
 import Modal from "react-modal";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import NavbarHeader from './NavbarHeader'
-import DmBrowse from './DmBrowser'
+import NavbarHeader from "./NavbarHeader";
+import DmBrowse from "./DmBrowser";
 
 const Navbar = (props) => {
   const [showChannels, setShowChannels] = useState(false);
@@ -23,7 +24,15 @@ const Navbar = (props) => {
 
   Modal.setAppElement("#root");
 
-  const { channels, postAddChannel, postCreateChannel, currentUserId, users } = props;
+  const {
+    channels,
+    postAddChannel,
+    postCreateChannel,
+    currentUserId,
+    users,
+    deleteRemoveChannel,
+    changeChannel
+  } = props;
 
   useEffect(() => {
     (async () => {
@@ -35,10 +44,13 @@ const Navbar = (props) => {
       });
 
       const allChannels = await res.json();
-      const filteredOptions = allChannels.filter(
-        (channel) => !channels.hasOwnProperty(channel.id) && channel.name[0] === '#'
-      ).map(option => option.name)
-        setOptions(filteredOptions);
+      const filteredOptions = allChannels
+        .filter(
+          (channel) =>
+            !channels.hasOwnProperty(channel.id) && channel.name[0] === "#"
+        )
+        .map((option) => option.name);
+      setOptions(filteredOptions);
     })();
   }, [channels]);
 
@@ -54,25 +66,21 @@ const Navbar = (props) => {
     setShowDms(!showDms);
   };
 
-  const changeChannel = (e) => {
-    props.changeChannel([e.target.id, e.target.innerHTML]);
+  const changeChannelHandler = (e) => {
+    changeChannel([e.target.id, e.currentTarget.textContent.split(' ').join('')]);
   };
 
   const changeDm = (e) => {
-
-    props.changeChannel([e.target.id, e.target.innerHTML]);
+    changeChannel([e.target.id, e.currentTarget.textContent]);
   };
-
-
-
   // + button to add / create channels TODO: a better name?
   const browseChannels = (e) => {
     setChannelModalIsOpen(true);
   };
 
   const browseUserDms = (e) => {
-      setDmModalIsOpen(true)
-  }
+    setDmModalIsOpen(true);
+  };
 
   function closeChannelModal() {
     setChannelModalIsOpen(false);
@@ -90,20 +98,28 @@ const Navbar = (props) => {
 
   // adds a channel to users navbar
   const addChannel = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (options.includes(addChannelInput)) {
-      postAddChannel(addChannelInput)
+      postAddChannel(addChannelInput);
     } else {
-      postCreateChannel(addChannelInput)
+      postCreateChannel(addChannelInput);
     }
-    setAddChannelInput('')
+    setAddChannelInput("");
     closeChannelModal();
   };
 
-  const addChannelInputHandler = e => {
-    setAddChannelInput(e.target.value || e.target.innerHTML)
-  }
+  const addChannelInputHandler = (e) => {
+    setAddChannelInput(e.target.value || e.target.innerHTML);
+  };
 
+  const removeChannel = async (e, channelId) => {
+    e.preventDefault();
+    await deleteRemoveChannel(channelId)
+    if (channels) {
+        const allChannels = Object.entries(channels)
+        changeChannel([parseInt(allChannels[0][0]), allChannels[0][1].name])
+    }
+  };
 
   const customStyles = {
     content: {
@@ -116,7 +132,23 @@ const Navbar = (props) => {
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.6)",
-      zIndex: '1000'
+      zIndex: "1000",
+    },
+  };
+
+  const customStyles2 = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      height: "700px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      zIndex: "1000",
     },
   };
 
@@ -124,7 +156,7 @@ const Navbar = (props) => {
     <div className="navbar">
       <div className="navbar-container">
         <div className="navbar-more">
-          <NavbarHeader/>
+          <NavbarHeader />
         </div>
         <div className="navbar-channel-dms-container">
           <div className="navbar-channels-container">
@@ -150,7 +182,9 @@ const Navbar = (props) => {
                 <div style={{ width: 300 }}>
                   <div className="modalContent">
                     <div id="modal-addChannel-container">
-                    <h1 className="addChannel-form-title">Search or Create Channel</h1>
+                      <h1 className="addChannel-form-title">
+                        Search or Create Channel
+                      </h1>
                       <Autocomplete
                         freeSolo
                         onInputChange={addChannelInputHandler}
@@ -165,19 +199,19 @@ const Navbar = (props) => {
                         )}
                       />
                       <div className="addChannel-form-buttons">
-                          <button
-                            className="addChannel-form-button addChannel-add"
-                            onClick={addChannel}
-                          >
-                            Add
-                          </button>
-                          <button
-                            className="addChannel-form-button addChannel-cancel"
-                            onClick={closeNewChannel}
-                          >
-                            Cancel
-                          </button>
-                        </div>
+                        <button
+                          className="addChannel-form-button addChannel-add"
+                          onClick={addChannel}
+                        >
+                          Add
+                        </button>
+                        <button
+                          className="addChannel-form-button addChannel-cancel"
+                          onClick={closeNewChannel}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -186,15 +220,21 @@ const Navbar = (props) => {
             <div className="navbar-channels">
               {showChannels
                 ? navChannels.map((channel) => {
-                    if (channel.name.startsWith('-')) return ''
+                    if (channel.name.startsWith("-")) return "";
                     return (
                       <div
                         key={channel.id}
                         className="navbar-channel"
                         id={channel.id}
-                        onClick={changeChannel}
+                        onClick={changeChannelHandler}
                       >
                         {`${channel.name.slice(0, 1)} ${channel.name.slice(1)}`}
+                        <button
+                          onClick={(event) => removeChannel(event, channel.id)}
+                          className="channel-delete-button"
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
                       </div>
                     );
                   })
@@ -207,22 +247,22 @@ const Navbar = (props) => {
                 <div className={showDms ? "arrow-down" : "arrow-right"}></div>
                 <div className="navbar__subheader-name"> Direct Messagess</div>
               </div>
-              <button onClick={browseUserDms}className="navbar-dm-browser">
+              <button onClick={browseUserDms} className="navbar-dm-browser">
                 <i className="fas fa-plus"></i>
               </button>
               <Modal
                 isOpen={dmModalIsOpen}
                 onRequestClose={closeDmModal}
-                style={customStyles}
+                style={customStyles2}
                 contentLabel="Example Modal"
               >
-                  <DmBrowse closeDmModal={closeDmModal}/>
+                <DmBrowse closeDmModal={closeDmModal} />
               </Modal>
             </div>
             <div className="navbar-dms">
-            {showDms
+              {showDms
                 ? navChannels.map((channel) => {
-                    if (channel.name.startsWith('#')) return ''
+                    if (channel.name.startsWith("#")) return "";
                     return (
                       <div
                         key={channel.id}
@@ -230,10 +270,20 @@ const Navbar = (props) => {
                         id={channel.id}
                         onClick={changeDm}
                       >
-                        {`${channel.name.split(' ').slice(1).map(id => {
-                            if (id === currentUserId) return ''
-                            return users[id].fullName
-                        }).join('')}`}
+                        {`${channel.name
+                          .split(" ")
+                          .slice(1)
+                          .map((id) => {
+                            if (id === currentUserId) return "";
+                            return users[id].fullName;
+                          })
+                          .join("")}`}
+                          <button
+                          onClick={(event) => removeChannel(event, channel.id)}
+                          className="channel-delete-button"
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
                       </div>
                     );
                   })
@@ -260,6 +310,8 @@ const mapDispatchToProps = (dispatch) => {
     postAddChannel: (channelName) => dispatch(postAddChannel(channelName)),
     postCreateChannel: (channelName) =>
       dispatch(postCreateChannel(channelName)),
+    deleteRemoveChannel: (channelId) =>
+      dispatch(deleteRemoveChannel(channelId)),
   };
 };
 

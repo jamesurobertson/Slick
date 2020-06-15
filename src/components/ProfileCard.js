@@ -37,7 +37,6 @@ const ProfileCard = (props) => {
     return null;
 
   }
-  console.log(currentUser, userId)
   return (
       <div className="procard-container">
         <img

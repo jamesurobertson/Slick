@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import MessageInput from "./MessageInput";
 import Message from "./Message";
-import { Emoji } from "emoji-mart";
 
 const ChannelMessages = (props) => {
   const { messages, channelId } = props;
-  const [reactions, setReactions] = useState([])
   const [channelMessages, setChannelMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
@@ -21,11 +19,6 @@ const ChannelMessages = (props) => {
   //   TODO: Scrol to bottom when you click on a channel
   useEffect(scrollToBottom, [channelMessages, messages, channelId]);
 
-  const addReaction = (e, messageId) => {
-      const emojiObj = {id: e.id, skin: localStorage.getItem('emoji-mart.skin')}
-      setReactions([...reactions, emojiObj])
-
-  }
 
   return (
     <div className="channel-primary-view">
@@ -51,7 +44,6 @@ const ChannelMessages = (props) => {
               <div key={id}>
                 <div className="channel-message" id={id}>
                   <Message
-                  addReaction={addReaction}
                     message={content}
                     displayName={displayName || fullName}
                     messageId={id}
@@ -62,10 +54,14 @@ const ChannelMessages = (props) => {
                     })}
                   />
                 </div>
-                <div className="emoji-container">{
-                    reactions.map(reaction => <Emoji emoji={reaction} size={22}/>)
-                }
-                </div>
+                {/* <div className="emoji-container">
+                    {
+                    reactions.map(reaction => {
+                        return (
+                            <Emoji emoji={reaction} size={22}/>
+                            )
+                })}
+                </div> */}
               </div>
             );
           } else {
@@ -85,5 +81,7 @@ const mapStateToProps = (state) => {
     channelId: state.session.activeChannel,
   };
 };
+
+
 
 export default connect(mapStateToProps)(ChannelMessages);
