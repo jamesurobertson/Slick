@@ -358,7 +358,7 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
   try {
     const res = await fetch(`http://localhost:8080/channel/${channelId}`, {
       method: "PUT",
-      body: JSON.stringify({ topic }),
+      body: JSON.stringify({ topic, numUsers }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -367,8 +367,8 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
 
     if (!res.ok) throw res;
 
-    const { channel } = await res.json();
-    dispatch(updateChannelInfo(channel));
+    const { payload } = await res.json();
+    dispatch(updateChannelInfo(payload));
   } catch (e) {
     console.error(e);
   }
