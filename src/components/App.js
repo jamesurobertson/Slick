@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Switch, BrowserRouter } from "react-router-dom";
 import { ProtectedRoute, AuthRoute } from "../Routes";
 import Home from "./Home";
+import Login from './Login'
 import Signup from "./Signup";
 
 // const ENDPOINT='http://localhost:8080'
@@ -36,6 +37,11 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
+          <AuthRoute
+          path="/login"
+          component={Login}
+          currentUserId={props.currentUserId}
+        />
         <AuthRoute
           path="/register"
           component={Signup}
@@ -46,11 +52,6 @@ function App(props) {
           component={Home}
           currentUserId={props.currentUserId}
         />
-        {/* <AuthRoute
-        path="/login"
-        component={Login}
-        currentUserId={props.currentUserId}
-      /> */}
       </Switch>
     </BrowserRouter>
   );

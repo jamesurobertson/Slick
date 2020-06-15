@@ -17,7 +17,7 @@ const Home = (props) => {
     getUserInfo,
     getAllMessages,
     getAllUsers,
-    users
+    users,
   } = props;
 
 

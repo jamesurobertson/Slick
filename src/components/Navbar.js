@@ -120,6 +120,22 @@ const Navbar = (props) => {
     },
   };
 
+  const customStyles2 = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      height: '700px',
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      zIndex: '1000'
+    },
+  };
+
   return (
     <div className="navbar">
       <div className="navbar-container">
@@ -213,7 +229,7 @@ const Navbar = (props) => {
               <Modal
                 isOpen={dmModalIsOpen}
                 onRequestClose={closeDmModal}
-                style={customStyles}
+                style={customStyles2}
                 contentLabel="Example Modal"
               >
                   <DmBrowse closeDmModal={closeDmModal}/>

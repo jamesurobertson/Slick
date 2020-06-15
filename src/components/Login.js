@@ -8,20 +8,18 @@ import {
 } from "../actions/index";
 import {Link} from 'react-router-dom'
 
-const Signup = (props) => {
+const Login = (props) => {
   // todo change backend to swap require of username/fullname
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const signup = async (e) => {
+  const login = async (e) => {
     e.preventDefault();
     try {
-      const body = { name, email, password, confirmPassword };
-      const res = await fetch(`http://localhost:8080/user`, {
-        method: "POST",
+      const body = {email, password };
+      const res = await fetch(`http://localhost:8080/user/login`, {
+        method: 'POST',
         body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
@@ -43,13 +41,11 @@ const Signup = (props) => {
         localStorage.setItem("SLICK_ACCESS_TOKEN", token);
         localStorage.setItem("SLICK_CURRENT_USER_ID", id);
 
-        setName("");
         setEmail("");
         setPassword("");
-        setConfirmPassword("");
         props.updateToken(token);
         props.updateCurrentUser(id);
-        props.updateUserInfo({ fullName: name, email });
+        props.updateUserInfo({ email });
       }
     } catch (e) {
       console.error(e);
@@ -60,17 +56,11 @@ const Signup = (props) => {
     const value = e.target.value;
     const name = e.target.name;
     switch (name) {
-      case "fullName":
-        setName(value);
-        break;
       case "email":
         setEmail(value);
         break;
       case "password":
         setPassword(value);
-        break;
-      case "confirmPassword":
-        setConfirmPassword(value);
         break;
       default:
         return;
@@ -92,27 +82,16 @@ const Signup = (props) => {
           </ul>
         </div>
         <form
-          onSubmit={signup}
-          id="register-profile-form"
+          onSubmit={login}
+          id="login-profile-form"
           className="edit-profile-form"
         >
-          <div className="edit-form-input">
-            <TextField
-              name="fullName"
-              onChange={formChangeHandler}
-              fullWidth
-              id="register-form-fullName"
-              label="Full Name"
-              variant="outlined"
-              defaultValue={name}
-            />
-          </div>
           <div className="edit-form-input">
             <TextField
               name="email"
               onChange={formChangeHandler}
               fullWidth
-              id="register-form-email"
+              id="login-form-email"
               label="Email"
               variant="outlined"
               defaultValue={email}
@@ -124,28 +103,16 @@ const Signup = (props) => {
               name="password"
               onChange={formChangeHandler}
               fullWidth
-              id="register-form-password"
+              id="login-form-fullName"
               label="Password"
               variant="outlined"
               defaultValue={password}
             />
           </div>
-          <div className="edit-form-input">
-            <TextField
-              type="password"
-              name="confirmPassword"
-              onChange={formChangeHandler}
-              fullWidth
-              id="register-form-confirmPassword"
-              label="Confirm Password"
-              variant="outlined"
-              defaultValue={confirmPassword}
-            />
-          </div>
-          <button type="submit">Sign Up</button>
+          <button type="submit">Login</button>
         </form>
         <div>
-            <Link to='/login'>Have an Account? Click here to log in.</Link></div>
+            <Link to='/register'>Don't have an Account? Click here to register.</Link></div>
       </div>
     </>
   );
@@ -166,4 +133,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

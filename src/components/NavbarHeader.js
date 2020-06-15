@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import NavbarDropDown from './NavbarDropDown'
 import DmBrowser from "./DmBrowser";
+import {connect} from 'react-redux'
 
 const NavbarHeader = (props) => {
   const [dropDownModalIsOpen, setDropDownModalIsOpen] = useState(false);
   const [dmModalIsOpen, setDmModalIsOpen] = useState(false);
+
+  const {userInfo} = props
 
   Modal.setAppElement("#root");
 
@@ -53,6 +56,7 @@ const NavbarHeader = (props) => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      height: '700px'
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -60,12 +64,13 @@ const NavbarHeader = (props) => {
     },
   };
 
+  if (!userInfo) return null
   return (
     <>
       <div className="navbar-more-container">
         <div className="navbarHeader-info" onClick={openDropDownModal}>
           <div className="navbarHeader__workspaceName">Slick</div>
-          <div className="navbarHeader__userName">James Robertson</div>
+          <div className="navbarHeader__userName">{userInfo.fullName}</div>
         </div>
         <div className='navbarHeader__composeMessage'>
           <button
@@ -99,4 +104,10 @@ const NavbarHeader = (props) => {
   );
 };
 
-export default NavbarHeader;
+const mapStateToProps = state => {
+    return {
+        userInfo: state.userInfo.userInfo
+    }
+}
+
+export default connect(mapStateToProps)(NavbarHeader);
