@@ -1,4 +1,4 @@
-import {SEND_CHANNEL_MESSAGE, RECEIVE_MESSAGES} from '../actions/index'
+import {SEND_CHANNEL_MESSAGE, RECEIVE_MESSAGES, DELETE_CHANNEL_MESSAGE} from '../actions/index'
 
 
 
@@ -14,6 +14,11 @@ const sendChannelMessageReducer = (state = {}, action) => {
                 messagesObj[message.id] = message
             })
             return Object.assign({}, state, messagesObj)
+        case DELETE_CHANNEL_MESSAGE:
+            console.log(action)
+            return Object.assign({}, state, {
+                [action.message.id]: ''
+            })
         default:
             return state
     }

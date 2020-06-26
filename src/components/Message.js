@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import Modal from "react-modal";
 import ProfileCard from "./ProfileCard";
 import EditProfile from "./EditProfile";
+import { deleteMessage } from "../actions/index";
 
 const Message = (props) => {
-  const { profileImageUrl } = props;
+  const { profileImageUrl, deleteMessage, userId, sessionId } = props;
   const [emojiShown, setEmojiShown] = useState(false);
   const [profCardX, setprofCardX] = useState(null);
   const [profCardY, setprofCardY] = useState(null);
@@ -22,7 +23,6 @@ const Message = (props) => {
   function closeEditProfile() {
     setShowEditProfile(false);
   }
-
 
   const profileCardStyles = {
     content: {
@@ -56,14 +56,21 @@ const Message = (props) => {
     },
   };
 
-  const openThread = (e) => {
+  const deleteMessageHandler = (e) => {
+    const messageId = e.target.parentNode.parentNode.parentNode.id;
+    deleteMessage(messageId);
   };
 
-  const openEmoji = (e) => {
-    document.body.style.overflowY = 'hidden'
-
-    setEmojiShown(!emojiShown);
+  const editMessageHandler = (e) => {
+    const messageId = e.target.parentNode.parentNode.parentNode.id;
+    deleteMessage(messageId);
   };
+
+  //   const openEmoji = (e) => {
+  //     document.body.style.overflowY = 'hidden'
+
+  //     setEmojiShown(!emojiShown);
+  //   };
 
   const openProfileCard = (e) => {
     const rect = e.target.getBoundingClientRect();
@@ -82,14 +89,13 @@ const Message = (props) => {
     setShowEditProfile(true);
   };
 
-//   const onEmojiPicked = (e) => {
-//     const emojiObj = {id: e.id, skin: e.skin}
+  //   const onEmojiPicked = (e) => {
+  //     const emojiObj = {id: e.id, skin: e.skin}
 
-//     postReaction(emojiObj, props.messageId)
-//     setEmojiShown(!setEmojiShown)
-//     document.body.style.overflowY = 'visible'
-//   }
-
+  //     postReaction(emojiObj, props.messageId)
+  //     setEmojiShown(!setEmojiShown)
+  //     document.body.style.overflowY = 'visible'
+  //   }
 
   return (
     <>
@@ -103,34 +109,45 @@ const Message = (props) => {
       <div className="message-content">
         {/* TODO: On timestamp hover show date */}
         <div className="messageSender">
-          {props.displayName || 'James'}
+          {props.displayName || props.fullName}
           <span className="message-timestamp"> {props.createdAt}</span>
         </div>
         <div className="messageContent">{props.message}</div>
       </div>
       <div className="messagePopup">
-        <button
-          onClick={openEmoji}
-          className="message-popup-button emoji-button"
-        >
+        <button className="message-popup-button emoji-button">
           <i className="message-popup-emoji emoji-open far fa-laugh-wink"></i>
         </button>
-        <button
-          onClick={openThread}
-          className="message-popup-button thread-button"
-        >
-          <i className="message-popup-emoji thread-open far fa-comment-dots" />
-        </button>
+        {userId === parseInt(sessionId) ? (
+          <button
+            onClick={editMessageHandler}
+            className="message-popup-button thread-button"
+          >
+            <i className="message-popup-emoji thread-open far fa-edit" />
+          </button>
+        ) : (
+          ""
+        )}
+        {userId === parseInt(sessionId) ? (
+          <button
+            onClick={deleteMessageHandler}
+            className="message-popup-button thread-button"
+          >
+            <i className="message-popup-emoji thread-open fas fa-times" />
+          </button>
+        ) : (
+          ""
+        )}
+
       </div>
-      <div className="message-emoji-picker">
-      </div>
+      <div className="message-emoji-picker"></div>
       <Modal
         isOpen={showProfileCard}
         onRequestClose={closeUserCard}
         style={profileCardStyles}
         contentLabel="Example Modal"
       >
-        <ProfileCard userId={props.userId} openEditProfile={openEditProfile} />
+        <ProfileCard userId={userId} openEditProfile={openEditProfile} />
       </Modal>
       <Modal
         isOpen={showEditProfile}
@@ -138,21 +155,22 @@ const Message = (props) => {
         style={editProfileCardStyles}
         contentLabel="Example Modal"
       >
-        <EditProfile closeModal={closeEditProfile}/>
+        <EditProfile closeModal={closeEditProfile} />
       </Modal>
     </>
   );
 };
 
-const msp = state => {
-    return {
+const msp = (state) => {
+  return {
+    sessionId: state.session.currentUserId,
+  };
+};
 
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-    }
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteMessage: (messageId) => dispatch(deleteMessage(messageId)),
+  };
+};
 
 export default connect(msp, mapDispatchToProps)(Message);

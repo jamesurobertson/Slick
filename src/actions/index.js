@@ -1,6 +1,6 @@
-export const SEND_CHANNEL_MESSAGE = "SEND_CHANNEL_MESSSAGE";
 export const CHANGE_CHANNEL = "CHANGE_CHANNEL";
 export const UPDATE_CHANNEL_INFO = "UPDATE_CHANNEL_INFO";
+
 
 export const UPDATE_TOKEN = "UPDATE_TOKEN";
 export const LOGOUT = "LOGOUT";
@@ -11,6 +11,9 @@ export const UPDATE_USERS = "UPDATE_USERS";
 export const RECEIVE_CHANNELS = "RECEIVE_CHANNELS";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_MESSAGES = "RECEIVE_MESSAGES";
+
+export const SEND_CHANNEL_MESSAGE = "SEND_CHANNEL_MESSSAGE";
+export const DELETE_CHANNEL_MESSAGE = "DELETE_CHANNEL_MESSAGE";
 
 export const ADD_CHANNEL = "ADD_CHANNEL";
 export const REMOVE_CHANNEL = 'REMOVE_CHANNEL'
@@ -48,6 +51,13 @@ export const sendChannelMessage = (message) => {
     message,
   };
 };
+
+export const deleteChannelMessage = (message) => {
+    return {
+        type: DELETE_CHANNEL_MESSAGE,
+        message,
+    }
+}
 
 export const updateToken = (token) => {
   return {
@@ -220,6 +230,7 @@ export const postChannelMessage = (
   content,
   channelId,
   displayName,
+  fullName,
   profileImageUrl
 ) => async (dispatch) => {
   try {
@@ -236,11 +247,34 @@ export const postChannelMessage = (
     const message = await res.json();
     message.message.displayName = displayName;
     message.message.profileImageUrl = profileImageUrl;
+    message.message.fullName = fullName
+    // message.message.fullName = fullName
     dispatch(sendChannelMessage(message));
   } catch (e) {
     console.error(e);
   }
 };
+
+export const deleteMessage = (messageId) => async (dispatch) => {
+    console.log(`yooo`, messageId)
+    try {
+      const res = await fetch(`http://localhost:8080/message/${messageId}`, {
+        method: "DELETE",
+        // body: JSON.stringify({ content }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+        },
+      });
+
+      if (!res.ok) throw res;
+      const message = await res.json();
+      console.log(message)
+      dispatch(deleteChannelMessage(message));
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
 export const postAddChannel = (channelName) => async (dispatch) => {
   const encodedChannelName = encodeURIComponent(channelName);

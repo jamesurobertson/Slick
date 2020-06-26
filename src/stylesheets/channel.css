@@ -104,7 +104,7 @@ div[contenteditable]{
 }
 
 .channel-messages-container {
-    padding: 0 0 55px;
+    padding: 64px 0 55px;
 }
 
 .channel-message {

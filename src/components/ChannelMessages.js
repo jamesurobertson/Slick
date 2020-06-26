@@ -40,12 +40,14 @@ const ChannelMessages = (props) => {
             messageableType === "channel" &&
             messageableId === parseInt(channelId[0])
           ) {
+
             return (
               <div key={id}>
                 <div className="channel-message" id={id}>
                   <Message
                     message={content}
-                    displayName={displayName || fullName}
+                    displayName={displayName}
+                    fullName={fullName}
                     messageId={id}
                     userId={userId}
                     profileImageUrl={profileImageUrl}

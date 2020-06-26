@@ -23,7 +23,8 @@
 }
 
 .procard__title {
-    font-weight: 400px
+    font-weight: 400px;
+    width: 270px;
 }
 
 .procard__buttons {

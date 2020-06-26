@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { postChannelMessage } from "../actions/index";
 import { Picker } from "emoji-mart";
@@ -8,12 +8,15 @@ const MessageInput = (props) => {
   const [message, setMessage] = useState("");
   const [emojiActive, setEmojiActive] = useState(false);
 
+  const messageInput = useRef(null)
+
   const postMessage = (e) => {
     e.preventDefault();
     if (message === "") return;
     const displayName = userInfo.userInfo.displayName;
+    const fullName = userInfo.userInfo.fullName;
     const profileImageUrl = userInfo.userInfo.profileImageUrl
-    postChannelMessage(message, channelId[0], displayName, profileImageUrl);
+    postChannelMessage(message, channelId[0], displayName, fullName, profileImageUrl);
 
     setMessage("");
   };
@@ -32,11 +35,16 @@ const MessageInput = (props) => {
     setEmojiActive(!emojiActive);
   };
 
+  useEffect(() => {
+    messageInput.current.focus()
+  })
+
   return (
     <div className="message-input-container-outer">
       <div className="message-input-container-inner">
         <form className="message-form" onSubmit={postMessage}>
           <input
+            ref={messageInput}
             className="message-input"
             onChange={messageChange}
             value={message}
@@ -77,8 +85,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postChannelMessage: (content, channelId, userId, displayName) =>
-      dispatch(postChannelMessage(content, channelId, userId, displayName)),
+    postChannelMessage: (content, channelId, displayName, fullName, profilePic) =>
+      dispatch(postChannelMessage(content, channelId, displayName, fullName, profilePic)),
   };
 };
 
