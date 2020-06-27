@@ -14,6 +14,28 @@
 
 }
 
+.navbar-more {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #502351;
+}
+
+.navbar__more-container {
+    display: flex;
+}
+
+.navbar__more-subheader {
+    display: flex;
+    padding: 8px 20px 8px;
+    width: 100%;
+}
+
+.navbar__more-subheader:hover {
+    background-color: #341135;
+    width: 100%;
+    cursor: pointer;
+}
+
 .navbar-channel-dms-container {
     display: flex;
     flex-direction: column;

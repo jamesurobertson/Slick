@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   changeChannel,
   postAddChannel,
   postCreateChannel,
-  deleteRemoveChannel
+  deleteRemoveChannel,
 } from "../actions/index";
 import Modal from "react-modal";
 import TextField from "@material-ui/core/TextField";
@@ -31,7 +32,7 @@ const Navbar = (props) => {
     currentUserId,
     users,
     deleteRemoveChannel,
-    changeChannel
+    changeChannel,
   } = props;
 
   useEffect(() => {
@@ -67,7 +68,10 @@ const Navbar = (props) => {
   };
 
   const changeChannelHandler = (e) => {
-    changeChannel([e.target.id, e.currentTarget.textContent.split(' ').join('')]);
+    changeChannel([
+      e.target.id,
+      e.currentTarget.textContent.split(" ").join(""),
+    ]);
   };
 
   const changeDm = (e) => {
@@ -114,10 +118,10 @@ const Navbar = (props) => {
 
   const removeChannel = async (e, channelId) => {
     e.preventDefault();
-    await deleteRemoveChannel(channelId)
+    await deleteRemoveChannel(channelId);
     if (channels) {
-        const allChannels = Object.entries(channels)
-        changeChannel([parseInt(allChannels[0][0]), allChannels[0][1].name])
+      const allChannels = Object.entries(channels);
+      changeChannel([parseInt(allChannels[0][0]), allChannels[0][1].name]);
     }
   };
 
@@ -155,8 +159,26 @@ const Navbar = (props) => {
   return (
     <div className="navbar">
       <div className="navbar-container">
-        <div className="navbar-more">
+        <div className="navbar-header">
           <NavbarHeader />
+        </div>
+        <div className="navbar-more">
+          <Link to="/people">
+            <div className="navbar__more-container">
+              <div className="navbar__more-subheader">
+                <i className="far fa-address-book" />
+                <div className="navbar__subheader-name"> People </div>
+              </div>
+            </div>
+          </Link>
+          <Link to="/channelBrowser">
+            <div className="navbar__more-container">
+              <div className="navbar__more-subheader">
+                <i className="fab fa-slack-hash" />
+                <div className="navbar__subheader-name"> Channel Browser </div>
+              </div>
+            </div>
+          </Link>
         </div>
         <div className="navbar-channel-dms-container">
           <div className="navbar-channels-container">
@@ -222,20 +244,25 @@ const Navbar = (props) => {
                 ? navChannels.map((channel) => {
                     if (channel.name.startsWith("-")) return "";
                     return (
-                      <div
-                        key={channel.id}
-                        className="navbar-channel"
-                        id={channel.id}
-                        onClick={changeChannelHandler}
-                      >
-                        {`${channel.name.slice(0, 1)} ${channel.name.slice(1)}`}
-                        <button
-                          onClick={(event) => removeChannel(event, channel.id)}
-                          className="channel-delete-button"
+                      <Link key={`nav ${channel.id}`} to="/">
+                        <div
+                          className="navbar-channel"
+                          id={channel.id}
+                          onClick={changeChannelHandler}
                         >
-                          <i className="fas fa-times"></i>
-                        </button>
-                      </div>
+                          {`${channel.name.slice(0, 1)} ${channel.name.slice(
+                            1
+                          )}`}
+                          <button
+                            onClick={(event) =>
+                              removeChannel(event, channel.id)
+                            }
+                            className="channel-delete-button"
+                          >
+                            <i className="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </Link>
                     );
                   })
                 : ""}
@@ -264,27 +291,30 @@ const Navbar = (props) => {
                 ? navChannels.map((channel) => {
                     if (channel.name.startsWith("#")) return "";
                     return (
-                      <div
-                        key={channel.id}
-                        className="navbar-channel"
-                        id={channel.id}
-                        onClick={changeDm}
-                      >
-                        {`${channel.name
-                          .split(" ")
-                          .slice(1)
-                          .map((id) => {
-                            if (id === currentUserId) return "";
-                            return users[id].fullName;
-                          })
-                          .join("")}`}
-                          <button
-                          onClick={(event) => removeChannel(event, channel.id)}
-                          className="channel-delete-button"
+                      <Link key={`nav ${channel.id}`} to="/">
+                        <div
+                          className="navbar-channel"
+                          id={channel.id}
+                          onClick={changeDm}
                         >
-                          <i className="fas fa-times"></i>
-                        </button>
-                      </div>
+                          {`${channel.name
+                            .split(" ")
+                            .slice(1)
+                            .map((id) => {
+                              if (id === currentUserId) return "";
+                              return users[id].fullName;
+                            })
+                            .join("")}`}
+                          <button
+                            onClick={(event) =>
+                              removeChannel(event, channel.id)
+                            }
+                            className="channel-delete-button"
+                          >
+                            <i className="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </Link>
                     );
                   })
                 : ""}

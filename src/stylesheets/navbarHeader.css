@@ -1,4 +1,4 @@
-.navbar-more-container {
+.navbar-header-container {
     display: flex;
     justify-content: space-between;
     height: 63px;
@@ -7,7 +7,7 @@
     padding: 0 15px;
 }
 
-.navbar-more:hover {
+.navbar-header:hover {
     background-color: rgb(0,0,0, .15);
     cursor: pointer;
 }

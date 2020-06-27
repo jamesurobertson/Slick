@@ -67,7 +67,7 @@ const NavbarHeader = (props) => {
   if (!userInfo) return null
   return (
     <>
-      <div className="navbar-more-container">
+      <div className="navbar-header-container">
         <div className="navbarHeader-info" onClick={openDropDownModal}>
           <div className="navbarHeader__workspaceName">Slick</div>
           <div className="navbarHeader__userName">{userInfo.fullName}</div>

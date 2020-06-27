@@ -256,11 +256,10 @@ export const postChannelMessage = (
 };
 
 export const deleteMessage = (messageId) => async (dispatch) => {
-    console.log(`yooo`, messageId)
+    console.log(messageId)  // Shows correct number
     try {
       const res = await fetch(`http://localhost:8080/message/${messageId}`, {
         method: "DELETE",
-        // body: JSON.stringify({ content }),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -268,9 +267,7 @@ export const deleteMessage = (messageId) => async (dispatch) => {
       });
 
       if (!res.ok) throw res;
-      const message = await res.json();
-      console.log(message)
-      dispatch(deleteChannelMessage(message));
+      dispatch(deleteChannelMessage({id: messageId}));
     } catch (e) {
       console.error(e);
     }

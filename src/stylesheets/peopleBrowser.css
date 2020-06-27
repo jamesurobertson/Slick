@@ -1,0 +1,75 @@
+.people-browser__header {
+    height: 225px;
+    right: 0;
+    left: 260px;
+    position: fixed;
+    background-color: white;
+    z-index: 1;
+
+}
+
+.people-browser__title {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid lightgray;
+}
+
+.people-browser__people-count {
+    padding: 10px;
+}
+
+.people-browser__members {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    height: 42px;
+    border-bottom: 1px solid lightgray;
+}
+
+.people-browser__member {
+    display: flex;
+    padding: 0 6px;
+    font-weight: bold;
+    font-size: 14px;
+    height: 100%;
+    align-items: center;
+    border-bottom: 2px solid green;;
+}
+
+.people-browser__cards {
+    padding: 218px 0 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.peoplecard__container {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 275px;
+    width: 195px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+
+.peoplecard__picture img {
+    width: 100%;
+    height: 195px;
+    border-bottom: 1px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.peoplecard__footer {
+    padding: 10px 10px;
+}
+
+.peoplecard__fullName {
+    font-size: 16px;
+    font-weight: bold;
+}

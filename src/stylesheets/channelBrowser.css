@@ -1,0 +1,80 @@
+.channel-browser__container {
+    width: 100%;
+    margin: 0 10px;
+
+}
+
+.channel-browser__header {
+    height: 225px;
+    right: 0;
+    left: 260px;
+    position: fixed;
+    background-color: white;
+    z-index: 1;
+    border-bottom: 1px solid lightgray;
+
+
+}
+
+.channel-browser__title {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid lightgray;
+}
+
+.channel-browser__channel-count {
+    padding: 10px 0 15px;
+    margin: 0 10px;
+}
+
+.channel-browser__channels {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    height: 42px;
+    border-bottom: 1px solid lightgray;
+}
+
+.channel-browser__channel {
+    display: flex;
+    padding: 0 6px;
+    font-weight: bold;
+    font-size: 14px;
+    height: 100%;
+    align-items: center;
+    border-bottom: 2px solid green;;
+}
+
+.channel-browser-cards {
+    display: flex;
+    flex-direction: column;
+    padding: 225px 0 10px 0;
+    width: 100%;
+
+}
+
+.channelcard__container {
+    width: 100%;
+    padding: 18px 10px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.channelcard__container:hover {
+    background-color: #F9F9F9;
+    cursor: pointer;
+}
+
+.channelcard__title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.channelcard__members {
+    font-size: 14px;
+    font-weight: 400;
+}
