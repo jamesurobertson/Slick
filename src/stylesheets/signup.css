@@ -1,15 +1,38 @@
 
-.signup-form-container {
+.signup-form-container, .login-form-container {
     display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: whitesmoke;
+}
+
+
+.signup-button, .login-button  {
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    background-color: #502351;
+    color: whitesmoke;
+    font-weight: bold;
+    border: 1px solid #502351;
+    border-radius: 3px;
+    width: 85%;
+    padding: 10px;
+}
+
+.signup-inputs, .login-inputs {
+    margin-top: 117px;
+    border: 3px solid #502351;
+    border-radius: 5px;
+}
+
+.register-form, .login-form {
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-
-.signup-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.sign-up-goto-login {
+    margin-top: 10px;
 }

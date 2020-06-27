@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PeopleCard from "./PeopleCard";
 
 const PeopleBrowser = (props) => {
-  const [userArray, setuserArray] = useState([]);
+  const [userArray, setUserArray] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   const { users } = props;
@@ -11,7 +11,7 @@ const PeopleBrowser = (props) => {
   const searchForm = useRef(null);
 
   useEffect(() => {
-    setuserArray(Object.values(users));
+    setUserArray(Object.values(users));
   }, [users]);
 
   useEffect(() => {
@@ -20,12 +20,23 @@ const PeopleBrowser = (props) => {
 
   const searchPeople = (e) => {
     e.preventDefault();
-    console.log(`search for ${searchInput}`);
     setSearchInput("");
+    setSearchInput("");
+    setUserArray(Object.values(users));
   };
 
   const searchChange = (e) => {
     setSearchInput(e.target.value);
+    const searchArray = Object.values(users).filter((user) => {
+      console.log(user);
+      return (
+        user.fullName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        user.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        user.email.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+    });
+
+    setUserArray(searchArray);
   };
 
   return (
@@ -43,7 +54,7 @@ const PeopleBrowser = (props) => {
                 className="message-input"
                 onChange={searchChange}
                 value={searchInput}
-                placeholder={`Serach by name or title`}
+                placeholder={`Serach by name, email, or title`}
               />
             </form>
           </div>
@@ -52,9 +63,9 @@ const PeopleBrowser = (props) => {
       </div>
       <div className="people-browser__cards">
         {userArray.map((user) => {
-          const { fullName, profileImageUrl, userId: id, title } = user;
+          const { fullName, profileImageUrl, id, title } = user;
           return (
-            <div className="peoplecard" key={id}>
+            <div className="peoplecard" key={`peoplecard ${id}`}>
               <PeopleCard
                 name={fullName}
                 image={profileImageUrl}

@@ -1,7 +1,7 @@
 .navbar {
     grid-area: navbar;
     background-color: #3f0e40;
-    width: 260px;
+    width: 230px;
     height: 100%;
     top: 38px;
     position: fixed;

@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ component: Component, path, currentUserId, exac
 		<Route
 			path={path}
 			exact={exact}
-			render={(props) => (currentUserId ? <Component {...props} /> : <Redirect to='/register' />)}
+			render={(props) => (currentUserId ? <Component {...props} /> : <Redirect to='/login' />)}
 		/>
 	);
 };

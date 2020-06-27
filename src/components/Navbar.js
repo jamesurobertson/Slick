@@ -245,14 +245,14 @@ const Navbar = (props) => {
                     if (channel.name.startsWith("-")) return "";
                     return (
                       <Link key={`nav ${channel.id}`} to="/">
-                        <div
-                          className="navbar-channel"
-                          id={channel.id}
-                          onClick={changeChannelHandler}
-                        >
-                          {`${channel.name.slice(0, 1)} ${channel.name.slice(
-                            1
-                          )}`}
+                          <div
+                            className="navbar-channel"
+                            id={channel.id}
+                            onClick={changeChannelHandler}
+                          >
+                            {`${channel.name.slice(0, 1)} ${channel.name.slice(
+                              1
+                            )}`}
                           <button
                             onClick={(event) =>
                               removeChannel(event, channel.id)
@@ -261,7 +261,7 @@ const Navbar = (props) => {
                           >
                             <i className="fas fa-times"></i>
                           </button>
-                        </div>
+                          </div>
                       </Link>
                     );
                   })

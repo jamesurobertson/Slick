@@ -24,7 +24,6 @@ const ChannelMessages = (props) => {
     <div className="channel-primary-view">
       <div className="channel-messages-container">
         {channelMessages.map((message) => {
-          // TODO: pass displayname down to Message component
           const {
             content,
             messageableType,

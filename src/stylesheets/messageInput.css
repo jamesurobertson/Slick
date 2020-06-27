@@ -2,7 +2,7 @@
 .message-input-container-outer {
     position: fixed;
     right: 0;
-    left: 260px;
+    left: 230px;
     bottom: 0;
     background-color: white;
 }
@@ -31,9 +31,11 @@
 
 .emojiButton {
     border: none;
+    color: gray;
     border-left: 1px solid gray;
     padding: 5px;
     background: transparent;
+    cursor: pointer;
 }
 
 .fa-laugh {

@@ -37,7 +37,7 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
-          <AuthRoute
+        <AuthRoute
           path="/login"
           component={Login}
           currentUserId={props.currentUserId}

@@ -58,7 +58,7 @@ body {
 
 .root-container {
     display: grid;
-    grid-template-columns: 260px auto;
+    grid-template-columns: 230px auto;
     grid-template-rows: 38px auto;
     grid-template-areas:
     'searchBar searchBar'

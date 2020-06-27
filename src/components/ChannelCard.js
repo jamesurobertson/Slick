@@ -7,7 +7,7 @@ const ChannelCard = (props) => {
   return (
     <>
       <div className="channelcard__title">{name}</div>
-      <div className="channelcard__members">{numUsers != 1 ? `${numUsers} members` : `${numUsers} member`}</div>
+      <div className="channelcard__members">{numUsers === 1 ? `${numUsers} member` : `${numUsers} members`}</div>
     </>
   );
 };

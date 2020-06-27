@@ -12,6 +12,7 @@ export const RECEIVE_CHANNELS = "RECEIVE_CHANNELS";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_MESSAGES = "RECEIVE_MESSAGES";
 
+export const EDIT_CHANNEL_MESSAGE = "EDIT_CHANNEL_MESSAGE";
 export const SEND_CHANNEL_MESSAGE = "SEND_CHANNEL_MESSSAGE";
 export const DELETE_CHANNEL_MESSAGE = "DELETE_CHANNEL_MESSAGE";
 
@@ -51,6 +52,13 @@ export const sendChannelMessage = (message) => {
     message,
   };
 };
+
+export const editChannelMessage = payload => {
+    return {
+        type: EDIT_CHANNEL_MESSAGE,
+        payload
+    }
+}
 
 export const deleteChannelMessage = (message) => {
     return {
@@ -256,7 +264,6 @@ export const postChannelMessage = (
 };
 
 export const deleteMessage = (messageId) => async (dispatch) => {
-    console.log(messageId)  // Shows correct number
     try {
       const res = await fetch(`http://localhost:8080/message/${messageId}`, {
         method: "DELETE",
@@ -404,3 +411,22 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
     console.error(e);
   }
 };
+
+export const putEditMessage = (messageId, content) => async (dispatch) => {
+    try {
+        const res = await fetch(`http://localhost:8080/message/${messageId}`, {
+            method: "PUT",
+            body: JSON.stringify({content}),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
+            },
+          });
+
+          if (!res.ok) throw res
+
+          dispatch(editChannelMessage([messageId, content]))
+    } catch (e) {
+        console.error(e)
+    }
+}

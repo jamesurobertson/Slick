@@ -25,12 +25,12 @@
 .messagePopup {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    height: 30px;
-    width: 60px;
+    justify-content: space-between;
+    position: absolute;
+    width: 90px;
+    padding: 9px;
     border: 1px solid #bfbfbf;
     border-radius: 5px;
-    position: absolute;
     right: 10px;
     top: -15px;
     visibility: hidden;
@@ -42,9 +42,11 @@
 }
 
 .message-popup-emoji {
-    font-size: 20px;
-    color: black;
+    font-size: 18px;
+    color: gray;
+    cursor: pointer;
 }
+
 
 .message-popup-button {
     padding: 0;
@@ -57,9 +59,77 @@
     padding-left: 15px;
 }
 
-.profileCardButton {
+.profileCardButton, .edit-profileCardButton {
+
     border: 0;
     outline: 0;
     padding: 0;
     background: transparent;
+}
+
+/* Edit Message Button */
+
+.edit-message-container {
+    width: 100%;
+    display: flex;
+}
+
+
+.edit-profileCardButton {
+    display: flex;
+    flex-direction: column;
+}
+.edit-message-profile-pic {
+    height: 36px;
+    width: 36px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit-message-form-container {
+    margin-left: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 75px;
+}
+.edit-message-form {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.edit-message-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    outline: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.edit-message-button {
+    border: none;
+    background-color: whitesmoke;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #1264a3;
+    border: 1px solid #1264a3
+}
+
+.edit-message-save-button {
+    color: whitesmoke;
+    margin-left: 10px;
+    background-color: #1264a3;
+}
+
+.edit-message-save-button:hover {
+    background-color: #3387c6;
+    color: white;
+}
+
+.edit-message-cancel-button:hover {
+    background-color: white;
 }

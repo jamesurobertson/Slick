@@ -4,15 +4,27 @@ import { connect } from "react-redux";
 import Modal from "react-modal";
 import ProfileCard from "./ProfileCard";
 import EditProfile from "./EditProfile";
-import { deleteMessage } from "../actions/index";
+import {
+  deleteMessage,
+  putEditMessage,
+  editChannelMessage,
+} from "../actions/index";
 
 const Message = (props) => {
-  const { profileImageUrl, deleteMessage, userId, sessionId } = props;
+  const {
+    profileImageUrl,
+    deleteMessage,
+    userId,
+    sessionId,
+    putEditMessage,
+  } = props;
   const [emojiShown, setEmojiShown] = useState(false);
   const [profCardX, setprofCardX] = useState(null);
   const [profCardY, setprofCardY] = useState(null);
   const [showProfileCard, setShowProfileCard] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [editMessage, setEditMessage] = useState(false);
+  const [editedMessage, setEditedMessage] = useState(props.message);
 
   Modal.setAppElement("#root");
 
@@ -62,8 +74,11 @@ const Message = (props) => {
   };
 
   const editMessageHandler = (e) => {
-    const messageId = e.target.parentNode.parentNode.parentNode.id;
-    deleteMessage(messageId);
+    setEditMessage(!editMessage);
+  };
+
+  const editMessageChange = (e) => {
+    setEditedMessage(e.target.value);
   };
 
   //   const openEmoji = (e) => {
@@ -74,9 +89,10 @@ const Message = (props) => {
 
   const openProfileCard = (e) => {
     const rect = e.target.getBoundingClientRect();
-    //429
-    if (rect.y > 484) {
-      setprofCardY(485);
+
+    // if profile card height(429) + y index of message is > window height move it up
+    if (rect.y + 429 > window.innerHeight) {
+      setprofCardY(window.innerHeight - 432);
     } else {
       setprofCardY(rect.y);
     }
@@ -97,50 +113,104 @@ const Message = (props) => {
   //     document.body.style.overflowY = 'visible'
   //   }
 
+  const updateMessageContent = (e, content, id) => {
+    e.preventDefault();
+    if (content === editedMessage) {
+      setEditMessage(!editedMessage);
+      return;
+    }
+    putEditMessage(id, content);
+
+    setEditMessage(!editMessage);
+  };
+
   return (
     <>
-      <button className="profileCardButton" onClick={openProfileCard}>
-        <img
-          className="message-profile-pic"
-          src={profileImageUrl}
-          alt="profile-pic"
-        />
-      </button>
-      <div className="message-content">
-        {/* TODO: On timestamp hover show date */}
-        <div className="messageSender">
-          {props.displayName || props.fullName}
-          <span className="message-timestamp"> {props.createdAt}</span>
+      {editMessage ? (
+        <div className="edit-message-container">
+          <button className="edit-profileCardButton" onClick={openProfileCard}>
+            <img
+              className="edit-message-profile-pic"
+              src={profileImageUrl}
+              alt="profile-pic"
+            />
+          </button>
+          <div className="edit-message-form-container">
+            <form
+              className="edit-message-form"
+              onSubmit={(e) =>
+                updateMessageContent(e, editedMessage, props.messageId)
+              }
+            >
+              <input
+                autoFocus
+                className="edit-message-input"
+                onChange={editMessageChange}
+                value={editedMessage}
+              />
+            </form>
+            <div classNAame="edit-message-button-container">
+              <button
+                className="edit-message-button edit-message-cancel-button"
+                onClick={() => setEditMessage(!editMessage)}
+              >
+                {" "}
+                Cancel
+              </button>
+              <button
+                className="edit-message-button edit-message-save-button"
+                onClick={(e) =>
+                  updateMessageContent(e, editedMessage, props.messageId)
+                }
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="messageContent">{props.message}</div>
-      </div>
-      <div className="messagePopup">
-        <button className="message-popup-button emoji-button">
-          <i className="message-popup-emoji emoji-open far fa-laugh-wink"></i>
-        </button>
-        {userId === parseInt(sessionId) ? (
-          <button
-            onClick={editMessageHandler}
-            className="message-popup-button thread-button"
-          >
-            <i className="message-popup-emoji thread-open far fa-edit" />
+      ) : (
+        <>
+          <button className="profileCardButton" onClick={openProfileCard}>
+            <img
+              className="message-profile-pic"
+              src={profileImageUrl}
+              alt="profile-pic"
+            />
           </button>
-        ) : (
-          ""
-        )}
-        {userId === parseInt(sessionId) ? (
-          <button
-            onClick={deleteMessageHandler}
-            className="message-popup-button thread-button"
-          >
-            <i className="message-popup-emoji thread-open fas fa-times" />
-          </button>
-        ) : (
-          ""
-        )}
-
-      </div>
-      <div className="message-emoji-picker"></div>
+          <div className="message-content">
+            <div className="messageSender">
+              {props.displayName || props.fullName}
+              <span className="message-timestamp"> {props.createdAt}</span>
+            </div>
+            <div className="messageContent">{props.message}</div>
+          </div>
+          <div className="messagePopup">
+            <button className="message-popup-button emoji-button">
+              <i className="message-popup-emoji emoji-open far fa-laugh-wink"></i>
+            </button>
+            {userId === parseInt(sessionId) ? (
+              <button
+                onClick={editMessageHandler}
+                className="message-popup-button thread-button"
+              >
+                <i className="message-popup-emoji thread-open far fa-edit" />
+              </button>
+            ) : (
+              ""
+            )}
+            {userId === parseInt(sessionId) ? (
+              <button
+                onClick={deleteMessageHandler}
+                className="message-popup-button thread-button"
+              >
+                <i className="message-popup-emoji thread-open fas fa-times" />
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+        </>
+      )}
       <Modal
         isOpen={showProfileCard}
         onRequestClose={closeUserCard}
@@ -170,6 +240,8 @@ const msp = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteMessage: (messageId) => dispatch(deleteMessage(messageId)),
+    putEditMessage: (messageId, content) =>
+      dispatch(putEditMessage(messageId, content)),
   };
 };
 

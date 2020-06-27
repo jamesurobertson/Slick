@@ -7,6 +7,7 @@ import { changeChannel, postAddChannel } from "../actions/index";
 const ChannelBrowser = (props) => {
   const [channelArray, setChannelArray] = useState([]);
   const [userChannels, setUserChannels] = useState([])
+  const [allChannels, setAllChannels] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   const { channels, changeChannel, postAddChannel } = props;
@@ -28,7 +29,7 @@ const ChannelBrowser = (props) => {
           (channel) =>
             channel.name[0] === "#"
         )
-
+        setAllChannels(allChannels)
       setChannelArray(filteredOptions);
     })();
   }, [channels]);
@@ -43,17 +44,24 @@ const ChannelBrowser = (props) => {
 
   const searchChannels = (e) => {
     e.preventDefault();
-    console.log(`search for ${searchInput}`);
     setSearchInput("");
+    setChannelArray(allChannels.filter(channel => channel.name[0] === '#'))
   };
 
   const searchChange = (e) => {
     setSearchInput(e.target.value);
+    const searchArray = allChannels.filter((channel) => {
+      return (
+        channel.name.toLowerCase().includes(e.target.value.toLowerCase()) &&
+        channel.name[0] === '#'
+      );
+    });
+
+    setChannelArray(searchArray);
   };
 
   const changeChannelHandler = (e) => {
     const channelName = e.currentTarget.firstChild.innerHTML;
-    console.log(channelName)
     for (let i = 0; i < channelArray.length; i++ ) {
         const channel = channelArray[i]
         if (channel.name === channelName) {
@@ -90,12 +98,12 @@ const ChannelBrowser = (props) => {
       </div>
       <div className="channel-browser-cards">
         {channelArray.map((channel) => {
-          const { name, numUsers } = channel;
+          const { name, numUsers, id } = channel;
           return (
-            <Link to="/">
+            <Link to="/" key={`channel-browser ${id}`}>
               <div
-                className="channelcard__container"
                 onClick={changeChannelHandler}
+                className="channelcard__container"
                 key={name}
               >
                 <ChannelCard name={name} numUsers={numUsers} />
