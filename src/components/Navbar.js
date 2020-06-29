@@ -297,11 +297,13 @@ const Navbar = (props) => {
                           id={channel.id}
                           onClick={changeDm}
                         >
-                          {`${channel.name
+                          {
+                          `${channel.name
                             .split(" ")
                             .slice(1)
                             .map((id) => {
-                              if (id === currentUserId) return "";
+                                console.log(id)
+                              if (id === currentUserId.toString()) return "";
                               return users[id].fullName;
                             })
                             .join("")}`}
