@@ -1,3 +1,5 @@
+import {backendUrl} from '../config/index'
+
 export const CHANGE_CHANNEL = "CHANGE_CHANNEL";
 export const UPDATE_CHANNEL_INFO = "UPDATE_CHANNEL_INFO";
 
@@ -126,7 +128,7 @@ export const receiveMessages = (messages) => {
 // all channels a particular user is apart of
 export const getChannels = (userId) => async (dispatch) => {
   try {
-    const res = await fetch(`http://localhost:8080/user/channel/${userId}`, {
+    const res = await fetch(`${backendUrl}/user/channel/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -144,7 +146,7 @@ export const getChannels = (userId) => async (dispatch) => {
 
 export const deleteRemoveChannel = channelId => async dispatch => {
     try {
-        const res = await fetch(`http://localhost:8080/channel/${channelId}`, {
+        const res = await fetch(`${backendUrl}/channel/${channelId}`, {
             method: 'DELETE',
             headers: {
               "Content-Type": "application/json",
@@ -163,7 +165,7 @@ export const deleteRemoveChannel = channelId => async dispatch => {
 
 export const getAllMessages = () => async (dispatch) => {
   try {
-    const res = await fetch("http://localhost:8080/message", {
+    const res = await fetch(`${backendUrl}/message`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -202,7 +204,7 @@ export const getAllMessages = () => async (dispatch) => {
 
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const res = await fetch("http://localhost:8080/user", {
+    const res = await fetch(`${backendUrl}/user`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -219,7 +221,7 @@ export const getAllUsers = () => async (dispatch) => {
 
 export const getUserInfo = (userId) => async (dispatch) => {
   try {
-    const res = await fetch(`http://localhost:8080/user/${userId}`, {
+    const res = await fetch(`${backendUrl}/user/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
@@ -242,7 +244,7 @@ export const postChannelMessage = (
   profileImageUrl
 ) => async (dispatch) => {
   try {
-    const res = await fetch(`http://localhost:8080/message/${channelId}`, {
+    const res = await fetch(`${backendUrl}/message/${channelId}`, {
       method: "POST",
       body: JSON.stringify({ content }),
       headers: {
@@ -265,7 +267,7 @@ export const postChannelMessage = (
 
 export const deleteMessage = (messageId) => async (dispatch) => {
     try {
-      const res = await fetch(`http://localhost:8080/message/${messageId}`, {
+      const res = await fetch(`${backendUrl}/message/${messageId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -284,7 +286,7 @@ export const postAddChannel = (channelName) => async (dispatch) => {
   const encodedChannelName = encodeURIComponent(channelName);
   try {
     const res = await fetch(
-      `http://localhost:8080/channel/${encodedChannelName}`,
+      `${backendUrl}/channel/${encodedChannelName}`,
       {
         method: "POST",
         headers: {
@@ -307,7 +309,7 @@ export const postAddChannel = (channelName) => async (dispatch) => {
 export const postAddDm = (toMessageId) => async (dispatch) => {
   try {
     const body = { toMessageId };
-    const res = await fetch(`http://localhost:8080/directMessage`, {
+    const res = await fetch(`${backendUrl}/directMessage`, {
       body: JSON.stringify(body),
       method: "POST",
       headers: {
@@ -329,7 +331,7 @@ export const postAddDm = (toMessageId) => async (dispatch) => {
 export const postCreateChannel = (name) => async (dispatch) => {
   try {
     const body = { name };
-    const res = await fetch(`http://localhost:8080/channel`, {
+    const res = await fetch(`${backendUrl}/channel`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
@@ -350,7 +352,7 @@ export const postCreateChannel = (name) => async (dispatch) => {
 
 export const postImage = (img, userInfo) => async (dispatch) => {
   try {
-    const res = await fetch(`http://localhost:8080/user/updateUser`, {
+    const res = await fetch(`${backendUrl}/user/updateUser`, {
       method: "PUT",
       body: JSON.stringify(userInfo),
       headers: {
@@ -370,7 +372,7 @@ export const postImage = (img, userInfo) => async (dispatch) => {
 
   if (!img) return;
   try {
-    const res = await fetch("http://localhost:8080/aws/post_file", {
+    const res = await fetch(`${backendUrl}/aws/post_file`, {
       method: "POST",
       body: img,
       headers: {
@@ -394,7 +396,7 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
   dispatch
 ) => {
   try {
-    const res = await fetch(`http://localhost:8080/channel/${channelId}`, {
+    const res = await fetch(`${backendUrl}/channel/${channelId}`, {
       method: "PUT",
       body: JSON.stringify({ topic, numUsers }),
       headers: {
@@ -415,7 +417,7 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
 export const putEditMessage = (messageId, content) => async (dispatch) => {
     console.log(messageId, content)
     try {
-        const res = await fetch(`http://localhost:8080/message/${messageId}`, {
+        const res = await fetch(`${backendUrl}/message/${messageId}`, {
             method: "PUT",
             body: JSON.stringify({content}),
             headers: {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import {backendUrl} from '../config/index'
 import { TextField } from "@material-ui/core";
 import {
   updateCurrentUser,
@@ -18,7 +19,7 @@ const Login = (props) => {
     e.preventDefault();
     try {
       const body = { email, password };
-      const res = await fetch(`http://localhost:8080/user/login`, {
+      const res = await fetch(`${backendUrl}/user/login`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: {

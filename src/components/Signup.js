@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {backendUrl} from '../config/index'
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
 import {
@@ -20,7 +21,7 @@ const Signup = (props) => {
     e.preventDefault();
     try {
       const body = { name, email, password, confirmPassword };
-      const res = await fetch(`http://localhost:8080/user`, {
+      const res = await fetch(`${backendUrl}/user`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: {

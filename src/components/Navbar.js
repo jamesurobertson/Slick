@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {backendUrl} from '../config/index'
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -37,7 +38,7 @@ const Navbar = (props) => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:8080/channel", {
+      const res = await fetch(`${backendUrl}/channel`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("SLICK_ACCESS_TOKEN")}`,
