@@ -302,7 +302,6 @@ const Navbar = (props) => {
                             .split(" ")
                             .slice(1)
                             .map((id) => {
-                                console.log(id)
                               if (id === currentUserId.toString()) return "";
                               return users[id].fullName;
                             })

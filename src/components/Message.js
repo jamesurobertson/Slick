@@ -115,10 +115,7 @@ const Message = (props) => {
 
   const updateMessageContent = (e, content, id) => {
     e.preventDefault();
-    if (content === editedMessage) {
-      setEditMessage(!editedMessage);
-      return;
-    }
+
     putEditMessage(id, content);
 
     setEditMessage(!editMessage);
@@ -149,7 +146,7 @@ const Message = (props) => {
                 value={editedMessage}
               />
             </form>
-            <div classNAame="edit-message-button-container">
+            <div className="edit-message-button-container">
               <button
                 className="edit-message-button edit-message-cancel-button"
                 onClick={() => setEditMessage(!editMessage)}
@@ -184,31 +181,27 @@ const Message = (props) => {
             </div>
             <div className="messageContent">{props.message}</div>
           </div>
-          <div className="messagePopup">
-            <button className="message-popup-button emoji-button">
-              <i className="message-popup-emoji emoji-open far fa-laugh-wink"></i>
-            </button>
             {userId === parseInt(sessionId) ? (
+          <div className="messagePopup">
+            {/* <button className="message-popup-button emoji-button">
+              <i className="message-popup-emoji emoji-open far fa-laugh-wink"></i>
+            </button> */}
               <button
                 onClick={editMessageHandler}
                 className="message-popup-button thread-button"
               >
                 <i className="message-popup-emoji thread-open far fa-edit" />
               </button>
-            ) : (
-              ""
-            )}
-            {userId === parseInt(sessionId) ? (
               <button
                 onClick={deleteMessageHandler}
                 className="message-popup-button thread-button"
               >
                 <i className="message-popup-emoji thread-open fas fa-times" />
               </button>
+          </div>
             ) : (
               ""
             )}
-          </div>
         </>
       )}
       <Modal

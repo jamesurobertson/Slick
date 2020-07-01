@@ -15,27 +15,30 @@ const UserCard = (props) => {
 
 
   const addDm = (e) => {
-    const userId = e.currentTarget.id.split('-')[1]
-    const user = users[userId]
+    const userToMessageId = e.currentTarget.id.split('-')[1]
+    const user = users[userToMessageId]
 
     let hasDm
+    console.log(userToMessageId)
     for (let i = 0; i < Object.values(channels).length; i++) {
         const name = Object.values(channels)[i].name
         const channelId = Object.values(channels)[i].id
-        if (name === `- ${userId} ${currentUser}`) {
+        if (name === `- ${userToMessageId} ${currentUser}`) {
             hasDm = [channelId, user.fullName]
             break
-        } else if (name === `- ${currentUser} ${userId}`) {
+        } else if (name === `- ${currentUser} ${userToMessageId}`) {
 
             hasDm = [channelId, user.fullName]
             break
         }
     }
 
+    console.log(hasDm)
+
     if (hasDm) {
         changeChannel(hasDm)
     } else {
-        postAddDm(userId)
+        postAddDm(userToMessageId)
     }
 
 

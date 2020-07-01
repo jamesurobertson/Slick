@@ -27,7 +27,7 @@
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    width: 90px;
+    width: 65px;
     padding: 9px;
     border: 1px solid #bfbfbf;
     border-radius: 5px;
@@ -53,6 +53,10 @@
     border: none;
     background: transparent;
     outline: 0;
+}
+
+.message-popup-button:hover .message-popup-emoji {
+    color: black;
 }
 
 .emoji-container {

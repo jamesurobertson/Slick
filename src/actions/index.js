@@ -413,6 +413,7 @@ export const postChannelUpdate = (channelId, topic, numUsers) => async (
 };
 
 export const putEditMessage = (messageId, content) => async (dispatch) => {
+    console.log(messageId, content)
     try {
         const res = await fetch(`http://localhost:8080/message/${messageId}`, {
             method: "PUT",

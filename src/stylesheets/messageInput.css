@@ -38,6 +38,10 @@
     cursor: pointer;
 }
 
+.emojiButton:hover {
+    color: black;
+}
+
 .fa-laugh {
     font-size: 23px;
 }
